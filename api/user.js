@@ -11,7 +11,7 @@ const user = new User()
 
 
 // Get All Users
-router.get('/all', async (req, res) => {
+router.get('/all', async (req, res, next) => {
     try {
         const data = db.prepare(
             `
@@ -20,18 +20,16 @@ router.get('/all', async (req, res) => {
         ).all()
         res.send(data)
     } catch (err) {
-        console.log(err)
-        res.status(500).send(err)
+        next(err)
     }
 });
 
-module.exports = router;
 
 // Insert Reset Password Token
-router.post('/reset-password', async (req, res) => { 
-    console.log(req.body)
-    let body = req.body
+router.post('/reset-password', async (req, res, next) => { 
     try {
+        console.log(req.body)
+        let body = req.body
         let user_id = body.user_id
         let token = generateBearerToken()
         let query = `
@@ -42,19 +40,18 @@ router.post('/reset-password', async (req, res) => {
         db.prepare(query).run({user_id: user_id, token: token})
         res.send({})
     } catch (err) {
-        console.log(err)
-        res.status(500).send(err)
+        next(err)
     }
 });
 
 // Create User Account
-router.post('/', async (req, res) => { 
-    let body = req.body
-    let isAdmin = 0
-    if (body.is_admin) {
-        isAdmin = 1
-    } 
+router.post('/', async (req, res, next) => {  
     try {
+        let body = req.body
+        let isAdmin = 0
+        if (body.is_admin) {
+            isAdmin = 1
+        } 
         let user_id = db.prepare(
             `INSERT INTO users 
             (username, password, is_admin)
@@ -78,8 +75,7 @@ router.post('/', async (req, res) => {
             "is_admin": isAdmin
         })
     } catch (err) {
-        console.log(err)
-        res.status(500).send(err)
+        next(err)
     }
 });
 
@@ -89,13 +85,14 @@ router.get('/:id', async (req, res) => {
 
 
 // Get Current User's Info
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     try {
         let user_id = getUserIDfromToken(req.headers.authorization)
         let data = user.getUserFromID(user_id)
         res.send(data)
     } catch (err) {
-        res.status(500).send(err)
+        next(err)
     }
 });
 
+module.exports = router;

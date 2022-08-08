@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const getDatabase = require('../utils/getDatabase')
 const db = getDatabase()
+const createError = require('http-errors')
 
 const generateBearerToken = require("../utils/generateBearerToken")
 const Auth = require("../models/Auth")
@@ -11,9 +12,9 @@ const auth = new Auth()
 const user = new User()
 
 // Login
-router.post('/login', async (req, res) => { 
-    let body = req.body
+router.post('/login', async (req, res, next) => { 
     try {
+        let body = req.body
         let data = db.prepare(
             `SELECT * FROM
             users WHERE
@@ -33,17 +34,16 @@ router.post('/login', async (req, res) => {
             auth.add(data[0].user_id, token)
             res.send(payload)
         } else {
-            res.sendStatus(401)
+            return next(createError.Unauthorized('No account found with those credentials'))
         }
     } catch (err) {
-        console.log(err)
-        res.status(500).send(err)
+        next(err)
     }
 });
 
-router.post('/reset-password', async (req, res) => { 
-    let body = req.body
+router.post('/reset-password', async (req, res, next) => { 
     try {
+        let body = req.body
         let data = db.prepare(
             `SELECT * FROM
             users WHERE
@@ -67,8 +67,7 @@ router.post('/reset-password', async (req, res) => {
             res.sendStatus(401)
         }
     } catch (err) {
-        console.log(err)
-        res.status(500).send(err)
+        next(err)
     }
 });
 

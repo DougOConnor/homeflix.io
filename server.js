@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
 const nocache = require('nocache');
+const createError = require('http-errors')
 const port = process.env.PORT || 5000;
 
 const axios = require('axios')
@@ -35,3 +36,21 @@ app.use("", express.static(path.join(__dirname, "client/build")));
 app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
+
+  app.use((error, req, res, next) => {
+    // Sets HTTP status code
+    if (error.status) {
+      res.status(error.status)
+    } else {
+      res.status(500)
+    }
+    
+  
+    // Sends response
+    res.json({
+      status: error.status,
+      message: error.message,
+      stack: error.stack
+    })
+  })
+  
