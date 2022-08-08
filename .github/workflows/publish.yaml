@@ -31,12 +31,12 @@ jobs:
           if [[ $GITHUB_REF_NAME =~ pre ]];
           then
               echo "Version is a pre-release, adding beta tag"
-              docker tag homeflix.io:beta douglasoconnor/homeflix.io:beta
+              docker tag homeflix.io douglasoconnor/homeflix.io:beta
           else
               echo "Version is a production release, adding latest tag"
-              docker tag homeflix.io:latest douglasoconnor/homeflix.io:latest
+              docker tag homeflix.io douglasoconnor/homeflix.io:latest
           fi
-          docker tag homeflix.io:$VERSION_TAG douglasoconnor/homeflix.io:$VERSION_TAG
+          docker tag homeflix.io douglasoconnor/homeflix.io:$VERSION_TAG
           docker login -u douglasoconnor -p $DOCKER_ACCESS_TOKEN
       - name: Push Image
         run: |
