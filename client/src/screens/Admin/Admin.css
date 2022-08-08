@@ -1,0 +1,15 @@
+td {
+    padding: 24px 12px;
+    padding-bottom: 24px;
+    vertical-align: bottom;
+}
+
+.form > td:first-child {
+    text-align: end;
+    font-size: 32px;
+    padding-bottom: 28px;
+}
+
+table {
+    width: 100%
+}
