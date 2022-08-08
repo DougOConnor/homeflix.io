@@ -20,7 +20,6 @@ jobs:
         run: |
           echo $GITHUB_REF_NAME
           echo $GITHUB_REF
-          echo "The new release is version $VERSION_TAG"
       - name: Write Secrets
         run: |
           echo "${AUTH_TOKENS}" > ./api/auth.json
@@ -29,7 +28,7 @@ jobs:
           docker build -t homeflix.io .
       - name: Tag image
         run: |
-          if [[ $VERSION_TAG =~ pre ]];
+          if [[ $GITHUB_REF_NAME =~ pre ]];
           then
               echo "Version is a pre-release, adding beta tag"
               docker tag homeflix.io:beta douglasoconnor/homeflix.io:beta
@@ -41,7 +40,7 @@ jobs:
           docker login -u douglasoconnor -p $DOCKER_ACCESS_TOKEN
       - name: Push Image
         run: |
-          if [[ $VERSION_TAG =~ pre ]];
+          if [[ $GITHUB_REF_NAME =~ pre ]];
           then
               docker push douglasoconnor/homeflix.io:beta
               docker push douglasoconnor/homeflix.io:$VERSION_TAG
