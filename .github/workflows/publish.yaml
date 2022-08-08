@@ -1,0 +1,53 @@
+name: Release homeflix.io
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  AUTH_TOKENS: ${{ secrets.AUTH_TOKENS }}
+  DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+
+
+jobs:
+  build:
+    name: Build and Push
+    runs-on: linux
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Get Tag
+        run: |
+          echo $GITHUB_REF_NAME
+          echo $GITHUB_REF
+          echo "The new release is version $VERSION_TAG"
+      - name: Write Secrets
+        run: |
+          echo "${AUTH_TOKENS}" > ./api/auth.json
+      - name: Build image
+        run: |
+          docker build -t homeflix.io .
+      - name: Tag image
+        run: |
+          if [[ $VERSION_TAG =~ pre ]];
+          then
+              echo "Version is a pre-release, adding beta tag"
+              docker tag homeflix.io:beta douglasoconnor/homeflix.io:beta
+          else
+              echo "Version is a production release, adding latest tag"
+              docker tag homeflix.io:latest douglasoconnor/homeflix.io:latest
+          fi
+          docker tag homeflix.io:$VERSION_TAG douglasoconnor/homeflix.io:$VERSION_TAG
+          docker login -u douglasoconnor -p $DOCKER_ACCESS_TOKEN
+      - name: Push Image
+        run: |
+          if [[ $VERSION_TAG =~ pre ]];
+          then
+              docker push douglasoconnor/homeflix.io:beta
+              docker push douglasoconnor/homeflix.io:$VERSION_TAG
+          else
+              docker push douglasoconnor/homeflix.io:latest
+              docker push douglasoconnor/homeflix.io:$VERSION_TAG
+          fi
+      
