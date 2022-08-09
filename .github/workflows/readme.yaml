@@ -13,7 +13,7 @@ jobs:
     name: Sync README
     runs-on: ubuntu-latest
     steps:
-      - name: Sync README
+      - name: Dockerhub Readme
         uses: ms-jpq/sync-dockerhub-readme@v1
         with:
           username: douglasoconnor
