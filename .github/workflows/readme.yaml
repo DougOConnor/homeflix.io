@@ -2,7 +2,8 @@ name: Sync README to DockerHub
 
 on:
   push:
-    main
+    branches:
+      - main
 
 env:
   AUTH_TOKENS: ${{ secrets.AUTH_TOKENS }}
