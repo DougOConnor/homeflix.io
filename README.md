@@ -8,11 +8,11 @@ homeflix.io is a web based application that allows home theater enthusiasts to h
 #
 ## Book Seats for Movie Night
 Interactive seating chart for friends and family to login and book their seats for movie night
-[![Checkout](/images/checkout_screen.png)](https://github.com/DougOConnor/homeflix.io)
+[![Checkout](https://homeflix.s3.amazonaws.com/readme/checkout_screen.png)](https://github.com/DougOConnor/homeflix.io)
 
 ## Match Your Theater Layout
 Completely customize homeflix.io with your exact home theater layout.
-[![Layout](/images/layout_editor.png)](https://github.com/DougOConnor/homeflix.io)
+[![Layout](https://homeflix.s3.amazonaws.com/readme/layout_editor.png)](https://github.com/DougOConnor/homeflix.io)
 
 
 #
@@ -23,6 +23,6 @@ docker run \
   -dit \
   --name=your_theater \
   -p 5000:5000 \
-  -v /Users/douglasoconnor/Desktop/homeflix:/data \
+  -v /Path/to/your/data:/data \
   douglasoconnor/homeflix.io:beta
 ```
