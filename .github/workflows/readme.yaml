@@ -9,12 +9,13 @@ env:
   DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 jobs:
   build:
-  runs-on: ubuntu-latest
-    steps:
-    - name: Sync README
-      uses: ms-jpq/sync-dockerhub-readme@v1
-      with:
-        username: douglasoconnor
-        password: $DOCKER_ACCESS_TOKEN
-        repository: douglasoconnor/homeflix.io
-        readme: "./README.md"
+    name: Sync README
+    runs-on: ubuntu-latest
+      steps:
+      - name: Sync README
+        uses: ms-jpq/sync-dockerhub-readme@v1
+        with:
+          username: douglasoconnor
+          password: $DOCKER_ACCESS_TOKEN
+          repository: douglasoconnor/homeflix.io
+          readme: "./README.md"
