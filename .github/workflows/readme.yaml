@@ -7,11 +7,12 @@ on:
 env:
   AUTH_TOKENS: ${{ secrets.AUTH_TOKENS }}
   DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-
-- name: Sync README
-  uses: ms-jpq/sync-dockerhub-readme@v1
-  with:
-    username: douglasoconnor
-    password: $DOCKER_ACCESS_TOKEN
-    repository: douglasoconnor/homeflix.io
-    readme: "./README.md"
+jobs:
+  build:
+    name: Sync README
+    uses: ms-jpq/sync-dockerhub-readme@v1
+    with:
+      username: douglasoconnor
+      password: $DOCKER_ACCESS_TOKEN
+      repository: douglasoconnor/homeflix.io
+      readme: "./README.md"
