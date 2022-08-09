@@ -42,10 +42,10 @@ jobs:
         run: |
           if [[ $GITHUB_REF_NAME =~ pre ]];
           then
+              docker push douglasoconnor/homeflix.io:$GITHUB_REF_NAME
               docker push douglasoconnor/homeflix.io:beta
-              docker push douglasoconnor/homeflix.io:$GITHUB_REF_NAME
           else
-              docker push douglasoconnor/homeflix.io:latest
               docker push douglasoconnor/homeflix.io:$GITHUB_REF_NAME
+              docker push douglasoconnor/homeflix.io:latest
           fi
       
