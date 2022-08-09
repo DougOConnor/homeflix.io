@@ -12,10 +12,10 @@ jobs:
     name: Sync README
     runs-on: ubuntu-latest
       steps:
-      - name: Sync README
-        uses: ms-jpq/sync-dockerhub-readme@v1
-        with:
-          username: douglasoconnor
-          password: $DOCKER_ACCESS_TOKEN
-          repository: douglasoconnor/homeflix.io
-          readme: "./README.md"
+        - name: Sync README
+          uses: ms-jpq/sync-dockerhub-readme@v1
+          with:
+            username: douglasoconnor
+            password: $DOCKER_ACCESS_TOKEN
+            repository: douglasoconnor/homeflix.io
+            readme: "./README.md"
