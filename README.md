@@ -12,7 +12,7 @@ Interactive seating chart for friends and family to login and book their seats f
 
 ## Match Your Theater Layout
 Completely customize homeflix.io with your exact home theater layout.
-[![Layout](https://homeflix.s3.amazonaws.com/readme/layout_editor.png)](https://github.com/DougOConnor/homeflix.io)
+[![Layout](https://d3n602puh8jcti.cloudfront.net/readme/layout_editor.png)](https://github.com/DougOConnor/homeflix.io)
 
 
 #
