@@ -17,6 +17,11 @@ import NowPlayingCard from '../components/NowPlayingCard'
 import MovieBackdrop from '../components/MovieBackdrop';
 import MoviePoster from '../components/MoviePoster';
 
+import {
+  formatDate,
+  formatTime,
+} from '../utils/helpers';
+
 const styles = {
     stepLabel: {
         color: 'lightgray'
@@ -134,6 +139,8 @@ const CheckoutScreen = (props) => {
                   <div style={{margin: "0px 24px"}}>
                     <Typography sx={{color: 'primary.contrastText'}} variant="h4">{movie.movie.title}</Typography>
                     <h3>{movie.movie.tagline}</h3>
+                    <p style={{margin: 0}}>{formatDate(movie.showing_datetime)}</p> 
+                    <p style={{margin: 0}}>{formatTime(movie.showing_datetime)}</p>
                   </div>
                 </Grid>
                 </Grid>
