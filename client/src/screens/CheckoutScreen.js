@@ -75,7 +75,7 @@ const CheckoutScreen = (props) => {
               }
             }
           ).then(() => {
-              navigate("/checkout/confirmation", { state: {seats: selectedSeatsList, movie: movie}})
+              navigate("/checkout/confirmation", { state: {seats: selectedSeats.sort(), movie: movie}})
           })
         } else {
           navigate({
