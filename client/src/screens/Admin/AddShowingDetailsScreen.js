@@ -8,7 +8,7 @@ import Page from '../../components/Page'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import { CardMedia } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField'
@@ -63,16 +63,14 @@ const AddMovieScreen = (props) => {
         <div style={{padding: 24}}>
         <Card>
         <CardContent>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'row'
-            }}>
-                <div>
+            <Grid container spacing={2} justifyContent="center">
+                <Grid item xs={12} sm={12} md={6} lg={6} style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}} >
                 <MoviePoster path={movie.poster_path} style={{width: 200}} />
                 <img style={{height: 12, marginTop: 12}} src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_long_1-8ba2ac31f354005783fab473602c34c3f4fd207150182061e425d366e4f34596.svg" />
-                </div>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={6} >
                 <div style={{
-                    paddingLeft: 24
+                    paddingLeft: 0
                 }}>
                     <Typography
                         variant="h5">
@@ -97,7 +95,8 @@ const AddMovieScreen = (props) => {
                         <Button style={{marginTop: 12}} variant="contained" onClick={() => addShowing()}>Add Showing</Button> 
                     </div> 
                 </div>
-            </div>
+                </Grid>
+            </Grid>
             
                    
         </CardContent>
