@@ -127,9 +127,20 @@ function LoginScreen(props) {
         backgroundRepeat: 'no-repeat',
         width: '100vw',
         height: '100vh' }} direction="column">
-            <Grid item textAlign={"center"}  style={{height: "60%",marginBottom: 90, display: 'flex', justifyContent: 'center', minWidth: 300}}>
-            <div style={{backgroundColor: 'white', height: "100%", width: 350,display: 'flex', flexDirection: "column", justifyContent: 'center', opacity: ".92", color: 'black', padding: 30}}>
-                <h1 style={{marginTop: 0}}>{props.info.theaterName}</h1>
+            <Grid item textAlign={"center"}  style={{minHeight: "60%", display: 'flex', justifyContent: 'center'}}>
+            <div style={{
+                backgroundColor: 'white',
+                maxWidth: 350,
+                //display: 'flex', 
+                flexDirection: "column", 
+                justifyContent: 'center', 
+                opacity: ".92", 
+                color: 'black', 
+                padding: 30,
+                overflowY: 'scroll',
+                paddingTop: 54
+                }}>
+                <h1 style={{marginTop: 0, display: 'block'}}>{props.info.theaterName}</h1>
                 <div style={{display: 'flex', justifyContent: 'center', marginBottom: 30}}>
                     <div>
                         {
