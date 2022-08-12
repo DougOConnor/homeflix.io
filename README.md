@@ -5,13 +5,15 @@
 
 
 homeflix.io is a web based application that allows home theater enthusiasts to host a booking portal for screenings at their home theater.
-#
+
 ## Book Seats for Movie Night
 Interactive seating chart for friends and family to login and book their seats for movie night
+
 [![Checkout](https://d3n602puh8jcti.cloudfront.net/readme/checkout_screen_compressed.jpg)](https://github.com/DougOConnor/homeflix.io)
 
 ## Match Your Theater Layout
 Completely customize homeflix.io with your exact home theater layout.
+
 [![Layout](https://d3n602puh8jcti.cloudfront.net/readme/layout_editor_compressed.jpg)](https://github.com/DougOConnor/homeflix.io)
 
 
