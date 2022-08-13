@@ -70,6 +70,7 @@ const ResponsiveAppBar = (props) => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
+            id='theater-name-desktop'
             variant="h6"
             noWrap
             component="div"
@@ -119,6 +120,7 @@ const ResponsiveAppBar = (props) => {
             </Menu>
           </Box>
           <Typography
+            id='theater-name'
             variant="h6"
             noWrap
             component="div"

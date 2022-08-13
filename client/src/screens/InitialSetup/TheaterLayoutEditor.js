@@ -181,7 +181,7 @@ const TheaterLayoutEditor = (props) => {
         
         </div>
         <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: 48}}>
-            <Button variant='contained' onClick={() => saveLayout()} >Save</Button>
+            <Button id="save-layout" variant='contained' onClick={() => saveLayout()} >Save</Button>
         </div>
         </div>
       </Page>

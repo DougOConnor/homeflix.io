@@ -75,6 +75,7 @@ const AdminCreate = (props) => {
             flexDirection: 'column',
         }}>
             <TextField
+                id='username'
                 style={formElement}
                 label="Username"
                 variant="standard"
@@ -86,6 +87,7 @@ const AdminCreate = (props) => {
                 {username}
             </TextField>
             <TextField
+                id='password'
                 style={formElement}
                 label="Password"
                 variant="standard"
@@ -97,6 +99,7 @@ const AdminCreate = (props) => {
                 {password}
             </TextField>
             <TextField 
+                id='confirm-password'
                 style={formElement}
                 label="Confirm Password"
                 variant="standard"
@@ -111,6 +114,7 @@ const AdminCreate = (props) => {
         </div>
         <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: 48}}>
             <Button
+                id="create-admin-account-button"
                 variant='contained'
                 onClick={() => saveInfo()}
                 disabled={password !== confirmPassword || password.length < 1} 

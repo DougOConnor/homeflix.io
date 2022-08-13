@@ -49,15 +49,24 @@ const SeatPicker = (props) => {
               <div style={{display: 'flex', justifyContent: 'space-between'}}>
                 <div>Rows</div>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                  <div style={AddStyle} onClick={() => props.addRow()}><AddIcon/></div>
-                  <div style={RemoveStyle} onClick={() => props.removeRow()}><RemoveIcon/></div>
+                  <div 
+                    id='add-row'
+                    style={AddStyle}
+                    onClick={() => props.addRow()}
+                    >
+                    <AddIcon/>
+                  </div>
+                  <div 
+                    id='remove-row'
+                    style={RemoveStyle}
+                    onClick={() => props.removeRow()}><RemoveIcon/></div>
                 </div>
               </div>
               <div style={{display: 'flex', justifyContent: 'space-between', marginTop: 4, marginBottom: 24}}>
                 <div>Seat Size</div>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                  <div style={AddStyle} onClick={() => props.increaseSeatSize()}><AddIcon/></div>
-                  <div style={RemoveStyle} onClick={() => props.decreaseSeatSize()}><RemoveIcon/></div>
+                  <div id="increase-seat-size" style={AddStyle} onClick={() => props.increaseSeatSize()}><AddIcon/></div>
+                  <div id="decrease-seat-size" style={RemoveStyle} onClick={() => props.decreaseSeatSize()}><RemoveIcon/></div>
                 </div>
               </div>
             </div>
@@ -102,8 +111,8 @@ const SeatPicker = (props) => {
                         bottom: 0,
                         left: -20
                       }}>
-                        <div className='arrow-up'  onClick={() => props.moveRowUp(index)}></div>
-                        <div className='arrow-down' onClick={() => props.moveRowDown(index)}></div>
+                        <div id={"row-" + index.toString() + "-move-up"} className='arrow-up'  onClick={() => props.moveRowUp(index)}></div>
+                        <div id={"row-" + index.toString() + "-move-down"} className='arrow-down' onClick={() => props.moveRowDown(index)}></div>
                       </div>
                     </div> 
                     : null
@@ -131,8 +140,8 @@ const SeatPicker = (props) => {
                                 left: 5
                               }}>
                               <div style={{display: 'flex', flexDirection: 'row'}}>
-                                <div className='arrow-left'  onClick={() => props.moveSeatLeft(rowIndex, index)}></div>
-                                <div className='arrow-right' onClick={() => props.moveSeatRight(rowIndex, index)}></div>
+                                <div id={seat["seatID"] + "-move-left"} className='arrow-left'  onClick={() => props.moveSeatLeft(rowIndex, index)}></div>
+                                <div id={seat["seatID"] + "-move-right"} className='arrow-right' onClick={() => props.moveSeatRight(rowIndex, index)}></div>
                               </div>
                                 
                               </div>
@@ -154,8 +163,8 @@ const SeatPicker = (props) => {
                         right: -56
                       }}>
                         <div style={{display: 'flex', flexDirection: 'row'}}>
-                          <div style={AddStyle} onClick={() => props.addSeat(index)}><AddIcon/></div>
-                          <div style={RemoveStyle} onClick={() => props.removeSeat(index)}><RemoveIcon /></div>
+                          <div id={"row-" + index.toString() + "-add-seat"} style={AddStyle} onClick={() => props.addSeat(index)}><AddIcon/></div>
+                          <div id={"row-" + index.toString() + "-remove-seat"} style={RemoveStyle} onClick={() => props.removeSeat(index)}><RemoveIcon /></div>
                         </div>
                       </div>
                     </div> 
