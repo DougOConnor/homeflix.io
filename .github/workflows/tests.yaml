@@ -23,9 +23,6 @@ jobs:
           sh install.sh
       - name: Run Tests
         run: |
-          
-          cd client
-          npm run build
-          cd ..
           nohup sh startup.sh > output.log &
+          cd client
           npm run test src/tests/e2e/*.test.js 
