@@ -15,7 +15,7 @@ describe("First Time Setup", () => {
     browser = await puppeteer.launch();
     page = await browser.newPage();
     await page.goto(HOMEFLIX_URL);
-  });
+  }, 10000);
 
   it("Admin Creation", async () => {
     await page.waitForSelector("#username");
@@ -84,5 +84,5 @@ describe("First Time Setup", () => {
 
   }, 10000);
 
-  afterAll(() => browser.close());
+  afterAll(() => browser.close(), 10000);
 });

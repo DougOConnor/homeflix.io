@@ -1,4 +1,4 @@
-name: Release homeflix.io
+name: Run Tests
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
 
 jobs:
   build:
-    name: Build and Push
+    name: End to End Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,8 +23,9 @@ jobs:
           sh install.sh
       - name: Run Tests
         run: |
-          nohup sh startup.sh > output.log &
+          
           cd client
-          nohup npm start > output.log &
-          sleep 5
+          npm run build
+          cd ..
+          nohup sh startup.sh > output.log &
           npm run test src/tests/e2e/*.test.js 
