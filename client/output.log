@@ -2,18 +2,20 @@
 > dougflix-theater@0.1.0 start
 > react-scripts start
 
-(node:80862) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+(node:83266) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
 (Use `node --trace-deprecation ...` to show where the warning was created)
-(node:80862) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+(node:83266) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
 Starting the development server...
 
-Compiled with warnings.
+Compiled successfully!
 
-src/screens/NowPlayingScreen.js
-  Line 18:28:  Expected '===' and instead saw '=='  eqeqeq
+You can now view dougflix-theater in the browser.
 
-Search for the keywords to learn more about each warning.
-To ignore, add // eslint-disable-next-line to the line before.
+  Local:            http://localhost:3000
+  On Your Network:  http://192.168.86.226:3000
+
+Note that the development build is not optimized.
+To create a production build, use npm run build.
 
 assets by path static/ 5.35 MiB
   asset static/js/bundle.js 5.3 MiB [emitted] (name: main) 1 related asset
@@ -21,11 +23,5 @@ assets by path static/ 5.35 MiB
   asset static/js/node_modules_web-vitals_dist_web-vitals_js.chunk.js 6.94 KiB [emitted] 1 related asset
 asset index.html 1.66 KiB [emitted]
 asset asset-manifest.json 538 bytes [emitted]
-cached modules 4.98 MiB (javascript) 41.2 KiB (asset) [cached] 1457 modules
-runtime modules 32.6 KiB 17 modules
-./src/screens/NowPlayingScreen.js 3.27 KiB [built] [code generated]
-
-WARNING in src/screens/NowPlayingScreen.js
-  Line 18:28:  Expected '===' and instead saw '=='  eqeqeq
-
-webpack 5.70.0 compiled with 1 warning in 5195 ms
+cached modules 4.99 MiB (javascript) 41.2 KiB (asset) 32.6 KiB (runtime) [cached] 1475 modules
+webpack 5.70.0 compiled successfully in 3961 ms
