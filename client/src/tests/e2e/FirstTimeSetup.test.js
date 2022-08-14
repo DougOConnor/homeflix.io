@@ -5,7 +5,7 @@ import {
   HOMEFLIX_URL
 } from '../TestConstants'
 
-jest.useRealTimers();
+//jest.useRealTimers();
 
 describe("First Time Setup", () => {
   let browser;

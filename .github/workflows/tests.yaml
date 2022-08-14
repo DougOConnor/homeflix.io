@@ -25,4 +25,5 @@ jobs:
         run: |
           nohup sh startup.sh > output.log &
           cd client
+          mkdir screenshots
           npm run test src/tests/e2e/*.test.js 
