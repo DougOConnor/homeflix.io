@@ -1,0 +1,29 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - tests
+
+env:
+  AUTH_TOKENS: ${{ secrets.AUTH_TOKENS }}
+
+jobs:
+  build:
+    name: End to End Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Write Secrets
+        run: |
+          echo "${AUTH_TOKENS}" > ./api/auth.json
+      - name: Install
+        run: |
+          sh install.sh
+      - name: Run Tests
+        run: |
+          nohup sh startup.sh > output.log &
+          cd client
+          mkdir screenshots
+          npm run test src/tests/e2e/*.test.js 

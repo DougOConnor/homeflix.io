@@ -1,0 +1,27 @@
+
+> dougflix-theater@0.1.0 start
+> react-scripts start
+
+(node:83266) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:83266) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+Starting the development server...
+
+Compiled successfully!
+
+You can now view dougflix-theater in the browser.
+
+  Local:            http://localhost:3000
+  On Your Network:  http://192.168.86.226:3000
+
+Note that the development build is not optimized.
+To create a production build, use npm run build.
+
+assets by path static/ 5.35 MiB
+  asset static/js/bundle.js 5.3 MiB [emitted] (name: main) 1 related asset
+  asset static/media/google.0590aaf0fe36e23dcc8c.png 41.2 KiB [emitted] [immutable] [from: src/assets/google.png] (auxiliary name: main)
+  asset static/js/node_modules_web-vitals_dist_web-vitals_js.chunk.js 6.94 KiB [emitted] 1 related asset
+asset index.html 1.66 KiB [emitted]
+asset asset-manifest.json 538 bytes [emitted]
+cached modules 4.99 MiB (javascript) 41.2 KiB (asset) 32.6 KiB (runtime) [cached] 1475 modules
+webpack 5.70.0 compiled successfully in 3961 ms

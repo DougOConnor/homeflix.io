@@ -46,11 +46,18 @@ const TheaterInfoEditor = (props) => {
             display: 'flex',
             flexDirection: 'column',
         }}>
-            <TextField label="Theater Name" variant="standard" onChange={(name) => theaterNameChangeHandler(name)}>{theaterName}</TextField>
+            <TextField
+                id="theater-name"
+                label="Theater Name"
+                variant="standard"
+                onChange={(name) => theaterNameChangeHandler(name)}
+                >
+                {theaterName}
+            </TextField>
         
         </div>
         <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: 48}}>
-            <Button variant='contained' onClick={() => saveInfo()} >Save</Button>
+            <Button id="save-theater-info" variant='contained' onClick={() => saveInfo()} >Save</Button>
         </div>
         </div>
       </Page>
