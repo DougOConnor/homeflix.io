@@ -44,6 +44,20 @@ router.get('/', (req, res, next) => {
     }
   })
 
+
+router.post('/:id', async (req, res, next) => { 
+  try {
+    const id = req.params.id;
+    db.prepare(
+        `UPDATE showings 
+         SET showing_datetime = @showing_datetime
+        WHERE showing_id = @showing_id`).run({showing_datetime: req.body.showing_datetime, showing_id: id})
+        res.send({"status": "success"})
+  } catch (err) {
+    next(err)
+  }
+});
+  
 router.post('/', async (req, res, next) => { 
   try {
     let body = req.body
@@ -51,6 +65,18 @@ router.post('/', async (req, res, next) => {
         `INSERT INTO showings 
                 (tmdb_id, title, poster_path, showing_datetime) 
         VALUES (@tmdb_id, @title, @poster_path, @showing_datetime)`).run(body)
+        res.send({"status": "success"})
+  } catch (err) {
+    next(err)
+  }
+});
+
+router.delete('/:id', async (req, res, next) => { 
+  try {
+    const id = req.params.id;
+    db.prepare(
+        `DELETE FROM showings 
+        WHERE showing_id = @showing_id`).run({showing_id: id})
         res.send({"status": "success"})
   } catch (err) {
     next(err)
