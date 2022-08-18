@@ -1,9 +1,6 @@
 import React from 'react';
 
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import StepContent from '@mui/material/StepContent';
+import Skeleton from '@mui/material/Skeleton';
 import SeatPicker from '../components/SeatPicker';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
@@ -131,23 +128,49 @@ const CheckoutScreen = (props) => {
                 <Grid container spacing={2} justifyContent="center" style={{marginTop: 12}}>
                 <Grid item xs={4} sm={4} md={4} lg={4} >
                 <div>
-                <MoviePoster path={movie.movie.poster_path} style={{width: "100%", height: "100%", objectFit: 'contain'}} />
-                
+                {
+                  movie.movie.poster_path !== undefined ?
+                  <MoviePoster path={movie.movie.poster_path} style={{width: "100%", height: "100%", objectFit: 'contain'}} /> 
+                  : <Skeleton variant="rectangular"><MoviePoster path={movie.movie.poster_path} style={{width: "100%", height: "100%", objectFit: 'contain'}} /> </Skeleton>
+                }
                 </div>
                 </Grid>
                 <Grid item xs={8} sm={8} md={8} lg={8} >
                   <div style={{margin: "0px 24px"}}>
                     <Typography sx={{color: 'primary.contrastText'}} variant="h4">{movie.movie.title}</Typography>
-                    <h3>{movie.movie.tagline}</h3>
-                    <p style={{margin: 0}}>{formatDate(movie.showing_datetime)}</p> 
-                    <p style={{margin: 0}}>{formatTime(movie.showing_datetime)}</p>
+                    
+                    {
+                      movie.movie.overview !== undefined ?
+                      <div>
+                        <h3>{movie.movie.tagline}</h3>
+                        <p style={{margin: 0}}>{formatDate(movie.showing_datetime)}</p> 
+                        <p style={{margin: 0}}>{formatTime(movie.showing_datetime)}</p>
+                      </div>
+                      :
+                      <div>
+                      <Skeleton variant="text" style={{fontSize: 34, width: "50%"}} />
+                      <Skeleton variant="text" style={{width: "80%"}} />
+                      <Skeleton variant="text" style={{width: "60%", marginTop: 24}} />
+                      <Skeleton variant="text" style={{width: "40%"}} />
+                      </div>
+                    }
                   </div>
                 </Grid>
                 </Grid>
             
               <div>
+                {
+                  movie.movie.overview !== undefined ?
+                  <p>{movie.movie.overview}</p>
+                  : 
+                  <div style={{marginTop: 24}}>
+                  <Skeleton variant="text" style={{width: "90%"}} />
+                  <Skeleton variant="text" style={{width: "98%"}} />
+                  <Skeleton variant="text" style={{width: "86%"}} />
+                  <Skeleton variant="text" style={{width: "30%"}} />
+                  </div>
+                }
                 
-                <p>{movie.movie.overview}</p>
                 <Stack direction="row" spacing={1} flexWrap={'wrap'}>
                   {
                     movie.movie.genres ? 
