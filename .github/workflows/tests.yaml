@@ -1,9 +1,9 @@
 name: Run Tests
 
 on:
-  push:
-    branches:
-      - tests
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
 
 env:
   AUTH_TOKENS: ${{ secrets.AUTH_TOKENS }}
@@ -26,4 +26,6 @@ jobs:
           nohup sh startup.sh > output.log &
           cd client
           mkdir screenshots
+          export SCREEN_WIDTH=1920
+          export SCREEN_HEIGHT=1080
           npm run test src/tests/e2e/*.test.js 
