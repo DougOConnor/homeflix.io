@@ -53,7 +53,7 @@ const AddMovieScreen = (props) => {
             "/api/v1/showings",
             data
         ).then(() => {
-            navigate("/")
+            navigate("/admin/showings")
         })
     }
 

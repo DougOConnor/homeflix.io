@@ -25,7 +25,7 @@ router.get('/search', async (req, res, next) => {
     try {
         const search = req.query.q
         axios.get(
-            'http://api.themoviedb.org/3/search/movie?api_key=' + auth_tokens.tmdb_token + '&language=en-US&page=1&include_adult=false&query=' + search
+            'https://api.themoviedb.org/3/search/movie?api_key=' + auth_tokens.tmdb_token + '&language=en-US&page=1&include_adult=false&query=' + search
         ).then(data => {
             res.send(data.data)
         }).catch(err => {
