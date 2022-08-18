@@ -24,6 +24,8 @@ import LoginScreen from './screens/LoginScreen'
 import AdminScreen from './screens/Admin/AdminScreen'
 import AddShowingDetailsScreen from './screens/Admin/AddShowingDetailsScreen'
 import Navbar from './components/Navbar'
+import AdminShowings from './screens/Admin/AdminShowingsScreen'
+import AdminUsersScreen from './screens/Admin/AdminUsersScreen'
 
 const primary = {
   //light: '#e15166;',
@@ -138,7 +140,9 @@ const lightTheme  = createTheme({
           <Route path="/setup/info" element={<TheaterInfoEditor refreshApppInfo={refreshApppInfo} />} />
           <Route path="/setup/layout" element={<TheaterLayoutEditor refreshApppInfo={refreshApppInfo}/>} />
           <Route path="/setup/admin" element={<AdminCreate setUser={setUser} refreshApppInfo={refreshApppInfo}/>}  />
-          <Route path="/admin" element={<AdminScreen/>} />
+          <Route path="/admin/showings" element={<AdminShowings />} />
+          <Route path="/admin/theater-info" element={<AdminScreen/>} />
+          <Route path="/admin/users" element={<AdminUsersScreen/>} />
         </Routes>
         </ThemeProvider>
         </div>

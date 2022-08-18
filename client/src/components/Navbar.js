@@ -35,7 +35,7 @@ const ResponsiveAppBar = (props) => {
     },
     {
       text: 'Admin',
-      action: () => navigate("/admin"),
+      action: () => navigate("/admin/theater-info"),
       admin: true
     },
     {

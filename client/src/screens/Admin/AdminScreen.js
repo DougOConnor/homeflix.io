@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import { useNavigate, useParams } from 'react-router-dom'
 
 import axios from 'axios'
-import Page from '../../components/Page'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -10,8 +8,9 @@ import { CardHeader } from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField'
-import UserTable from '../../components/Admin/UserTable'
 import {readUserData} from '../../utils/storage'
+
+import AdminBase from './AdminBase';
 
 import './Admin.css'
 
@@ -48,7 +47,7 @@ const AdminScreen = (props) => {
     }
 
     return (
-        <Page>
+        <AdminBase>
         <div  >
             <Card style={cardStyle}>
                 <CardHeader title="Theater Info">
@@ -80,14 +79,8 @@ const AdminScreen = (props) => {
                     <Button variant='contained' onClick={updateInfo}>Save</Button>
                 </CardActions>
             </Card>
-            <Card style={cardStyle}>
-                <CardHeader title="Users"></CardHeader>
-                <CardContent>
-                <UserTable />
-                </CardContent>
-            </Card>
         </div>
-        </Page>
+        </AdminBase>
     )
 }
 
