@@ -75,9 +75,12 @@ router.delete('/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
     db.prepare(
+      `DELETE FROM reservations 
+      WHERE showing_id = @showing_id`).run({showing_id: id})
+    db.prepare(
         `DELETE FROM showings 
         WHERE showing_id = @showing_id`).run({showing_id: id})
-        res.send({"status": "success"})
+    res.send({"status": "success"})
   } catch (err) {
     next(err)
   }
