@@ -30,5 +30,7 @@ jobs:
           export SCREEN_WIDTH=1920
           export SCREEN_HEIGHT=1080
           npm run test src/tests/e2e/*.test.js
+      - name: Upload Screenshots
+        run: |
           npm install --save-dev @percy/cli
           ./node_modules/.bin/percy upload screenshots
