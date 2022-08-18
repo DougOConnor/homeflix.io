@@ -26,4 +26,6 @@ jobs:
           nohup sh startup.sh > output.log &
           cd client
           mkdir screenshots
+          export SCREEN_WIDTH=1920
+          export SCREEN_HEIGHT=1080
           npm run test src/tests/e2e/*.test.js 
