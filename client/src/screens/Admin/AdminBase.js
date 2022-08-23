@@ -13,6 +13,10 @@ const Pages = [
         "link": "/admin/showings"
     },
     {
+        "text": "Reservations",
+        "link": "/admin/reservations"
+    },
+    {
         "text": "Users",
         "link": "/admin/users"
     }
