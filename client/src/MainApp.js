@@ -26,6 +26,7 @@ import AddShowingDetailsScreen from './screens/Admin/AddShowingDetailsScreen'
 import Navbar from './components/Navbar'
 import AdminShowings from './screens/Admin/AdminShowingsScreen'
 import AdminUsersScreen from './screens/Admin/AdminUsersScreen'
+import AdminReservationsScreen from "./screens/Admin/AdminReservationsScreen";
 
 const primary = {
   //light: '#e15166;',
@@ -143,6 +144,7 @@ const lightTheme  = createTheme({
           <Route path="/admin/showings" element={<AdminShowings />} />
           <Route path="/admin/theater-info" element={<AdminScreen/>} />
           <Route path="/admin/users" element={<AdminUsersScreen/>} />
+          <Route path="/admin/reservations" element={<AdminReservationsScreen/>} />
         </Routes>
         </ThemeProvider>
         </div>
