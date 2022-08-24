@@ -26,7 +26,6 @@ const AdminReservationsScreen = (props) => {
                 </CardContent>
                 <CardActions>
                     <div style={{width: "100%", display: 'flex', justifyContent: 'flex-end'}}>
-                        <Button variant="contained" onClick={() => navigate("/add-showing")}>Add Showing</Button>
                     </div>
                 </CardActions>
             </Card>
