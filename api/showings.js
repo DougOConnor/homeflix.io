@@ -36,7 +36,7 @@ router.get('/:id', async (req, res, next) => {
 router.get('/', (req, res, next) => {
     try {
         const data = db.prepare(
-            `SELECT * FROM showings WHERE showing_datetime > datetime('now') ORDER BY showing_datetime`
+            `SELECT * FROM showings WHERE showing_datetime > datetime('now','-1 day','localtime') ORDER BY showing_datetime`
             ).all()
         res.send( data )
     } catch (err) {
