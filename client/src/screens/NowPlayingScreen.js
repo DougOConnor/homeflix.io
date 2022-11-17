@@ -107,6 +107,13 @@ const NowPlayingScreen = (props) => {
         </div>
         : null
         }
+        {
+          loaded == true  && nowPlaying.length === 0 ?
+          <div id="no-movies-found">
+            <p style={{marginTop: 24}}>No movies are currently playing.</p>
+          </div>
+          : null
+        }
           {
               nowPlaying.map(movie => {
                   return(
