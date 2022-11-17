@@ -68,6 +68,9 @@ describe("First Time Setup", () => {
   }, 10000);
 
   it("Theater Layout", async () => {
+    await page.waitForTimeout(2000)
+    await page.screenshot({ path: getScreenshotName('first_time_login_theater_layout_start') });
+
     await page.waitForSelector("#add-row");
     await page.screenshot({ path: getScreenshotName('first_time_login_theater_layout') });
 
@@ -98,7 +101,7 @@ describe("First Time Setup", () => {
     await page.waitForSelector("#no-movies-found");
     await page.screenshot({ path: getScreenshotName('empty_homepage') });
 
-  }, 10000);
+  }, 15000);
 
   afterAll(() => browser.close(), 10000);
 });
