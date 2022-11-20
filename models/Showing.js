@@ -1,32 +1,25 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  const User = sequelize.define("users", {
-    user_id: {
+  sequelize.define("showings", {
+    showing_id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
     },
-    username: {
-      type: DataTypes.STRING,
-      unique: true,
-    },
-    email: {
+    tmdb_id: {
       type: DataTypes.STRING,
     },
-    name: {
+    title: {
       type: DataTypes.STRING,
     },
-    birthdate: {
-      type: DataTypes.DATEONLY,
-    },
-    is_admin: {
-      type: DataTypes.BOOLEAN,
-    },
-    password: {
+    poster_path: {
       type: DataTypes.STRING,
     },
-    reset_token: {
+    year: {
+      type: DataTypes.INTEGER,
+    },
+    showing_datetime: {
       type: DataTypes.STRING,
     }
   },
@@ -34,3 +27,4 @@ module.exports = (sequelize) => {
     timestamps: false,
   });
 };
+
