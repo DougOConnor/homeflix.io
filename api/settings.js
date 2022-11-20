@@ -4,9 +4,7 @@ const getDatabase = require('../utils/getDatabase')
 const db = getDatabase()
 const fs = require('fs')
 const createError = require('http-errors')
-
-const User = require('../models/User')
-const user = new User()
+const { models } = require('../models');
 
 const getUserIDfromToken = require('../utils/getUserIDfromToken');
 
@@ -66,7 +64,9 @@ router.post('/info', async (req, res, next) => {
   try {
     // Check if user is admin
     const user_id = getUserIDfromToken(req.headers.authorization)
-    if (!user.isAdmin(user_id)) {
+    const user = await models.users.findByPk(user_id)
+    console.log(user)
+    if (!user.is_admin) {
       return next(createError.Unauthorized('You are not authorized to do this'))
     } else {
       // Write new info to file
@@ -97,7 +97,8 @@ router.post('/layout', async (req, res, next) => {
   try {
     // Check if user is admin
     const user_id = getUserIDfromToken(req.headers.authorization)
-    if (!user.isAdmin(user_id)) {
+    const user = await models.users.findByPk(user_id)
+    if (!user.is_admin) {
       return next(createError.Unauthorized('You are not authorized to do this'))
     } else {
       // Write new layout to file

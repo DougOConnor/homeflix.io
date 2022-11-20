@@ -1,37 +1,31 @@
 const express = require('express');
 const router = express.Router();
-const getDatabase = require('../utils/getDatabase')
-const db = getDatabase()
 const createError = require('http-errors')
 
 const generateBearerToken = require("../utils/generateBearerToken")
-const Auth = require("../models/Auth")
-const User = require("../models/User")
 
-const auth = new Auth()
-const user = new User()
+const { models } = require("../models")
 
 // Login
 router.post('/login', async (req, res, next) => { 
     try {
         let body = req.body
-        let data = db.prepare(
-            `SELECT * FROM
-            users WHERE
-            username =  @username AND
-            password = @password
-            `).all(body)
-        
-        if (data.length == 1) {
+        let user = await models.users.findOne({
+            "where": {
+              "username": body.username,
+              "password": body.password
+            }
+        })
+        if (user.username == body.username) {
             let token = generateBearerToken()
             let payload = {
-                token: token,
-                username: data[0].username,
-                email: data[0].email,
-                user_id: data[0].user_id,
-                is_admin: data[0].is_admin
+              token: token,
+              username: user.username,
+              email: user.email,
+              user_id: user.user_id,
+              is_admin: user.is_admin
             }
-            auth.add(data[0].user_id, token)
+            await models.auth_tokens.create({user_id: user.user_id, token:token})
             res.send(payload)
         } else {
             return next(createError.Unauthorized('No account found with those credentials'))
@@ -44,24 +38,25 @@ router.post('/login', async (req, res, next) => {
 router.post('/reset-password', async (req, res, next) => { 
     try {
         let body = req.body
-        let data = db.prepare(
-            `SELECT * FROM
-            users WHERE
-            reset_token =  @reset_token
-            `).all({reset_token: body.reset_token})
+        let user = await models.users.findOne({
+          "where": {
+            "reset_token": body.reset_token
+          }
+        })
         
-        if (data.length == 1) {
+        if (user.reset_token == body.reset_token) {
             let token = generateBearerToken()
             let payload = {
-                token: token,
-                username: data[0].username,
-                email: data[0].email,
-                user_id: data[0].user_id,
-                is_admin: data[0].is_admin
+              token: token,
+              username: user.username,
+              email: user.email,
+              user_id: user.user_id,
+              is_admin: user.is_admin
             }
-            user.updatePassword(data[0].user_id, body.password)
-            user.updateResetToken(data[0].user_id, null)
-            auth.add(data[0].user_id, token)
+            user.password = body.password
+            user.reset_token = null
+            await user.save()
+            await models.auth_tokens.create({user_id: user.user_id, token: token})
             res.send(payload)
         } else {
             res.sendStatus(401)

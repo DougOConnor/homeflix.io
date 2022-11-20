@@ -6,19 +6,19 @@ const db = getDatabase()
 const generateBearerToken = require("../utils/generateBearerToken")
 const getUserIDfromToken = require("../utils/getUserIDfromToken")
 
-const User = require("../models/User")
-const user = new User()
+const { models } = require('../models');
+const sequelize = require('../models');
 
+const {
+    formatDate,
+    formatTime,
+} = require('../utils/helpers')
 
 // Get All Users
 router.get('/all', async (req, res, next) => {
     try {
-        const data = db.prepare(
-            `
-            SELECT * FROM users
-            `
-        ).all()
-        res.send(data)
+        const users_list = await models.users.findAll()
+        res.send(users_list)
     } catch (err) {
         next(err)
     }
@@ -28,16 +28,12 @@ router.get('/all', async (req, res, next) => {
 // Insert Reset Password Token
 router.post('/reset-password', async (req, res, next) => { 
     try {
-        console.log(req.body)
         let body = req.body
         let user_id = body.user_id
         let token = generateBearerToken()
-        let query = `
-            UPDATE users
-            SET reset_token = @token
-            WHERE user_id = @user_id
-        `
-        db.prepare(query).run({user_id: user_id, token: token})
+        let user = await models.users.findByPk(user_id)
+        user.reset_token = token
+        user.save()
         res.send({})
     } catch (err) {
         next(err)
@@ -49,8 +45,9 @@ router.get('/reservations', async (req, res, next) => {
     try {
         
         let user_id = getUserIDfromToken(req.headers.authorization)
-        console.log(user_id)
-        let data = db.prepare(
+        //let user = await models.users.findByPk(user_id)
+        //let reservations = await user.getReservations({ include: models.showings })
+        let data = await sequelize.query(
             `
             SELECT
                 reservations.user_id,
@@ -61,12 +58,18 @@ router.get('/reservations', async (req, res, next) => {
                 showings.showing_datetime
             FROM reservations
             LEFT JOIN showings ON reservations.showing_id = showings.showing_id
-            WHERE user_id = @user_id
+            WHERE user_id = :user_id
             AND showing_datetime > datetime('now','-1 day','localtime')
-            `
-        ).all({user_id: user_id})
-        console.log(data)
-        res.send(data)
+            `,
+            {
+                replacements: { user_id: user_id },
+            }
+        )
+        data[0].forEach(item => {
+          item.display_date = formatDate(item.showing_datetime)
+          item.display_time = formatTime(item.showing_datetime)
+        })
+        res.send(data[0])
     } catch (err) {
         next(err)
     }
@@ -80,26 +83,21 @@ router.post('/', async (req, res, next) => {
         if (body.is_admin) {
             isAdmin = 1
         } 
-        let user_id = db.prepare(
-            `INSERT INTO users 
-            (username, password, is_admin)
-            VALUES (@username, @password, @is_admin)
-            returning user_id
-            `).run({username: body.username, password: body.password, is_admin: isAdmin})
+        user = await models.users.create({
+            username: body.username,
+            password: body.password,
+            is_admin: isAdmin
+        })
         let token = generateBearerToken()
-        db.prepare(
-            `
-            INSERT INTO user_auth_tokens
-            (user_id, token)
-            VALUES
-            (@user_id, @token)
-            `
-        ).run({user_id: user_id.lastInsertRowid, token: token})
+        await models.auth_tokens.create({
+            user_id: user.user_id,
+            token: token
+        })
         res.send({
             "status": "success",
             "token": token,
-            "user_id": user_id.lastInsertRowid,
-            "username": body.username,
+            "user_id": user.user_id,
+            "username": user.username,
             "is_admin": isAdmin
         })
     } catch (err) {
@@ -116,8 +114,8 @@ router.get('/:id', async (req, res) => {
 router.get('/', async (req, res, next) => {
     try {
         let user_id = getUserIDfromToken(req.headers.authorization)
-        let data = user.getUserFromID(user_id)
-        res.send(data)
+        let user = await models.users.findByPk(user_id)
+        res.send(user)
     } catch (err) {
         next(err)
     }
