@@ -102,12 +102,11 @@ router.post('/layout', async (req, res, next) => {
       // Write new layout to file
       let body = req.body
       fs.writeFileSync(theaterLayoutPath, JSON.stringify(body))
-      const insert = 'INSERT INTO seats (seat_id) VALUES (:seatID)'
       body.seating.rows.map((row) => {
-        let insertSeats = async (seats) => {
-            for (const seat of seats) await sequelize.query(insert, { replacements: { seatID: seat } });
-        };
-        insertSeats(row.seats)
+        row.seats.map(async (seat) => {
+          console.log(seat)
+          await models.seats.create({seat_id: seat.seatID});
+        })
       })
       res.send({})
     }
