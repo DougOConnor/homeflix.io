@@ -69,8 +69,6 @@ describe("First Time Setup", () => {
 
   it("Theater Layout", async () => {
     await page.waitForTimeout(2000)
-    await page.screenshot({ path: getScreenshotName('first_time_login_theater_layout_start') });
-
     await page.waitForSelector("#add-row");
     await page.screenshot({ path: getScreenshotName('first_time_login_theater_layout') });
 
