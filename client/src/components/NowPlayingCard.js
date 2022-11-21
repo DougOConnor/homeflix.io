@@ -15,7 +15,9 @@ const days = [
 ]
 
 function formatDate(mydate) {
+  console.log("mydate", mydate)
   let dateObj = new Date(mydate)
+  console.log(dateObj)
   let year = dateObj.getFullYear().toString()
   let month = dateObj.toLocaleString('default', { month: 'long' })
   let weekday = days[dateObj.getDay()]
@@ -38,8 +40,8 @@ export default function NowPlayingCard(props) {
         <div style={{marginLeft: 12, width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
             <div>
             <h2 style={{color: 'white', marginBottom: 0}}>{props.data.title}</h2>
-            <p style={{marginTop: 0, marginBottom: 0}}>{formatDate(props.data.showing_datetime)}</p>
-            <p style={{marginTop: 0}}>{formatTime(props.data.showing_datetime)}</p>
+            <p style={{marginTop: 0, marginBottom: 0}}>{props.data.display_date}</p>
+            <p style={{marginTop: 0}}>{props.data.display_time}</p>
             <p>{props.selectedSeats ? "Seats " + props.selectedSeats.join(","): null }</p>
             </div>
             <div style={{height: "100%", display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
