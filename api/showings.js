@@ -1,22 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const getDatabase = require('../utils/getDatabase')
-const db = getDatabase()
 
 const axios = require('axios')
 const auth_tokens = require('./auth.json')
 
-const User = require('../models/User')
+const { models } = require('../models');
+const sequelize = require('../models');
 
-const user = new User()
-
+const {
+  formatDate,
+  formatTime,
+} = require('../utils/helpers')
 
 router.get('/:id', async (req, res, next) => { 
     try {
         const id = req.params.id;
-        let data = db.prepare('SELECT * FROM showings WHERE showing_id = ?').all(id)
-        data = data[0]
-        let reservations = db.prepare('SELECT seat_id FROM reservations WHERE showing_id = ?').all(id)
+        let showing = await models.showings.findByPk(id)
+        data = {
+          "showing_id": showing.showing_id,
+          "title": showing.title,
+          "poster_path": showing.poster_path,
+          "showing_datetime": showing.showing_datetime,
+          "tmdb_id": showing.tmdb_id
+        }
+        let reservations = await models.reservations.findAll({ where: { showing_id: id } })
         let resList = []
         reservations.map(item => {
             resList.push(item.seat_id)
@@ -33,12 +40,17 @@ router.get('/:id', async (req, res, next) => {
     }
 });
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
-        const data = db.prepare(
-            `SELECT * FROM showings WHERE showing_datetime > datetime('now','-1 day','localtime') ORDER BY showing_datetime`
-            ).all()
-        res.send( data )
+        const data = await sequelize.query(
+          "SELECT * FROM showings WHERE showing_datetime > datetime('now','-1 day','localtime') ORDER BY showing_datetime"
+          )
+        
+        data[0].forEach(item => {
+          item.display_date = formatDate(item.showing_datetime)
+          item.display_time = formatTime(item.showing_datetime)
+        })
+        res.send( data[0] )
     } catch (err) {
       next(err)
     }
@@ -48,11 +60,15 @@ router.get('/', (req, res, next) => {
 router.post('/:id', async (req, res, next) => { 
   try {
     const id = req.params.id;
-    db.prepare(
-        `UPDATE showings 
-         SET showing_datetime = @showing_datetime
-        WHERE showing_id = @showing_id`).run({showing_datetime: req.body.showing_datetime, showing_id: id})
-        res.send({"status": "success"})
+    await sequelize.query(
+      `UPDATE showings 
+         SET showing_datetime = :showing_datetime
+        WHERE showing_id = :showing_id`,
+        {
+          replacements: {showing_datetime: req.body.showing_datetime, showing_id: id}
+        }
+    )
+    res.send({"status": "success"})
   } catch (err) {
     next(err)
   }
@@ -61,11 +77,13 @@ router.post('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => { 
   try {
     let body = req.body
-    db.prepare(
-        `INSERT INTO showings 
-                (tmdb_id, title, poster_path, showing_datetime) 
-        VALUES (@tmdb_id, @title, @poster_path, @showing_datetime)`).run(body)
-        res.send({"status": "success"})
+    let showing = await models.showings.create({
+      title: body.title,
+      poster_path: body.poster_path,
+      tmdb_id: body.tmdb_id,
+      showing_datetime: body.showing_datetime
+    })
+    res.send({"status": "success"})
   } catch (err) {
     next(err)
   }
@@ -74,12 +92,20 @@ router.post('/', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => { 
   try {
     const id = req.params.id;
-    db.prepare(
+    await sequelize.query(
       `DELETE FROM reservations 
-      WHERE showing_id = @showing_id`).run({showing_id: id})
-    db.prepare(
-        `DELETE FROM showings 
-        WHERE showing_id = @showing_id`).run({showing_id: id})
+      WHERE showing_id = :showing_id`,
+      {
+        replacements: {showing_id: id}
+      }
+    )
+    await sequelize.query(
+      `DELETE FROM showings 
+      WHERE showing_id = :showing_id`,
+      {
+        replacements: {showing_id: id}
+      }
+    )
     res.send({"status": "success"})
   } catch (err) {
     next(err)

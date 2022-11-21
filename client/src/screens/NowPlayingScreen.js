@@ -53,6 +53,8 @@ const NowPlayingScreen = (props) => {
                 title: reservation.title,
                 poster_path: reservation.poster_path,
                 showing_datetime: reservation.showing_datetime,
+                display_date: reservation.display_date,
+                display_time: reservation.display_time,
                 seats: []
               }
             }
@@ -142,8 +144,8 @@ const NowPlayingScreen = (props) => {
                     <MoviePoster path={myReservations[reservation].poster_path} style={{width: 65, marginRight: 12}}/>
                     <div>
                       <h2 style={nyReservationsStyle.title} >{myReservations[reservation].title}</h2>
-                      <p style={nyReservationsStyle.body}>{formatDate(myReservations[reservation].showing_datetime)}</p>
-                      <p style={nyReservationsStyle.body}>{formatTime(myReservations[reservation].showing_datetime)}</p>
+                      <p style={nyReservationsStyle.body}>{myReservations[reservation].display_date}</p>
+                      <p style={nyReservationsStyle.body}>{myReservations[reservation].display_time}</p>
                       <p style={nyReservationsStyle.body}>Seats: {myReservations[reservation].seats.join(", ")}</p>
                     </div>
                   </div>

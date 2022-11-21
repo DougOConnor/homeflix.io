@@ -3,10 +3,7 @@ const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
 const nocache = require('nocache');
-const createError = require('http-errors')
 const port = process.env.PORT || 5000;
-
-const axios = require('axios')
 
 const showingsRoutes = require('./api/showings');
 const userRoutes = require('./api/user');
@@ -27,8 +24,6 @@ app.use('/api/v1/reservation', reservation);
 app.use('/api/v1/tmdb', tmdb);
 app.use('/api/v1/settings', settings);
 
-
-console.log("STARTING SERVER")
 
 // Serve any static files
 app.use("", express.static(path.join(__dirname, "client/build")));

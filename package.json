@@ -28,7 +28,10 @@
     "nodemailer": "^6.7.8",
     "pg": "^8.7.3",
     "pg-format": "^1.0.4",
+    "sequelize": "^6.25.6",
+    "sequelize-cli": "^6.5.2",
     "sqlite": "^4.1.1",
-    "sqlite3": "^5.0.8"
+    "sqlite3": "^5.0.8",
+    "swagger-ui-express": "^4.6.0"
   }
 }

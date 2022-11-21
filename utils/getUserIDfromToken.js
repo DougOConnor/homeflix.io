@@ -1,15 +1,10 @@
 
-const getDatabase = require('./getDatabase')
-const db = getDatabase()
+const { models } = require('../models');
 
-const getUserIDfromToken = (token) => {
-    let data = db.prepare(
-        `SELECT user_id
-        FROM user_auth_tokens 
-        WHERE token = @token
-        `).all({token: token.slice(7)})
-    if (data.length > 0) {
-        return data[0].user_id
+const getUserIDfromToken = async (token) => {
+    let user = await models.auth_tokens.findOne({where: {token: token.slice(7)}})
+    if (user.user_id != undefined) {
+        return user.user_id
     } else {
         return null
     }

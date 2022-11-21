@@ -1,14 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const getDatabase = require('../utils/getDatabase')
-const db = getDatabase()
 const fs = require('fs')
 const createError = require('http-errors')
-
-const User = require('../models/User')
-const user = new User()
+const { models } = require('../models');
 
 const getUserIDfromToken = require('../utils/getUserIDfromToken');
+const sequelize = require('../models');
 
 const theaterLayoutPath = './data/layout.json'
 const theaterInfoPath = './data/info.json'
@@ -34,7 +31,7 @@ router.get('/app-info', async (req, res, next) => {
     }
 
     // Check if any admin users exist
-    let admins = db.prepare('SELECT * from users').all()
+    let admins = await models.users.findAll({ where: {is_admin: true} })
     if (admins.length > 0) {
         response.hasAdmin = true
     } else {
@@ -65,8 +62,9 @@ router.get('/info', async (req, res, next) => {
 router.post('/info', async (req, res, next) => { 
   try {
     // Check if user is admin
-    const user_id = getUserIDfromToken(req.headers.authorization)
-    if (!user.isAdmin(user_id)) {
+    const user_id = await getUserIDfromToken(req.headers.authorization)
+    const user = await models.users.findByPk(user_id)
+    if (!user.is_admin) {
       return next(createError.Unauthorized('You are not authorized to do this'))
     } else {
       // Write new info to file
@@ -96,19 +94,19 @@ router.get('/layout', async (req, res, next) => {
 router.post('/layout', async (req, res, next) => { 
   try {
     // Check if user is admin
-    const user_id = getUserIDfromToken(req.headers.authorization)
-    if (!user.isAdmin(user_id)) {
+    const user_id = await getUserIDfromToken(req.headers.authorization)
+    const user = await models.users.findByPk(user_id)
+    if (!user.is_admin) {
       return next(createError.Unauthorized('You are not authorized to do this'))
     } else {
       // Write new layout to file
       let body = req.body
       fs.writeFileSync(theaterLayoutPath, JSON.stringify(body))
-      const insert = db.prepare('INSERT INTO seats (seat_id) VALUES (@seatID)');
       body.seating.rows.map((row) => {
-        let insertSeats = db.transaction((seats) => {
-            for (const seat of seats) insert.run(seat);
-        });
-        insertSeats(row.seats)
+        row.seats.map(async (seat) => {
+          console.log(seat)
+          await models.seats.create({seat_id: seat.seatID});
+        })
       })
       res.send({})
     }
