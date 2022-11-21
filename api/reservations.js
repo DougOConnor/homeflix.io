@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const getDatabase = require('../utils/getDatabase')
-const db = getDatabase()
 
 const { models } = require('../models');
 
@@ -10,7 +8,7 @@ const sequelize = require('../models');
 
 router.post('/', async (req, res, next) => { 
     try {
-        let user_id = getUserIDfromToken(req.headers.authorization)
+        let user_id = await getUserIDfromToken(req.headers.authorization)
         let body = req.body
         let reservations = []
         let showing = body.showing_id
@@ -69,7 +67,7 @@ router.delete('/:showing_id/:seat_id', async (req, res, next) => {
     try {
       const showing_id = req.params.showing_id;
       const seat_id = req.params.seat_id;
-      const user_id = getUserIDfromToken(req.headers.authorization)
+      const user_id = await getUserIDfromToken(req.headers.authorization)
       const user = await models.users.findByPk(user_id)
       if (user.is_admin) {
         await models.reservations.destroy({where: {

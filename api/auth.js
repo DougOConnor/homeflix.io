@@ -16,7 +16,7 @@ router.post('/login', async (req, res, next) => {
               "password": body.password
             }
         })
-        if (user.username == body.username) {
+        if (user != null) {
             let token = generateBearerToken()
             let payload = {
               token: token,

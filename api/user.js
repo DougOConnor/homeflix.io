@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const getDatabase = require('../utils/getDatabase')
-const db = getDatabase()
 
 const generateBearerToken = require("../utils/generateBearerToken")
 const getUserIDfromToken = require("../utils/getUserIDfromToken")
@@ -44,7 +42,7 @@ router.post('/reset-password', async (req, res, next) => {
 router.get('/reservations', async (req, res, next) => {
     try {
         
-        let user_id = getUserIDfromToken(req.headers.authorization)
+        let user_id = await getUserIDfromToken(req.headers.authorization)
         //let user = await models.users.findByPk(user_id)
         //let reservations = await user.getReservations({ include: models.showings })
         let data = await sequelize.query(
@@ -113,7 +111,7 @@ router.get('/:id', async (req, res) => {
 // Get Current User's Info
 router.get('/', async (req, res, next) => {
     try {
-        let user_id = getUserIDfromToken(req.headers.authorization)
+        let user_id = await getUserIDfromToken(req.headers.authorization)
         let user = await models.users.findByPk(user_id)
         res.send(user)
     } catch (err) {

@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const getDatabase = require('../utils/getDatabase')
-const db = getDatabase()
 
 const axios = require('axios')
 const auth_tokens = require('./auth.json')
