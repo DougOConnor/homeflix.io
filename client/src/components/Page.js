@@ -7,7 +7,7 @@ const Page = (props) => {
     return (
       <div>
         <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={12} sm={8} md={6} lg={6} >
+          <Grid item xs={12} sm={10} md={8} lg={8} >
             {props.children}
           </Grid>
         </Grid>
