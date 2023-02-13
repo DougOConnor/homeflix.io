@@ -35,7 +35,7 @@ jobs:
           report-title: 'Test Report'
       - name: Upload to Percy
         run: |
-          mkdir client/screnshots
+          mkdir client/screenshots
           mv tests/screenshots/* client/screenshots
           cd client
           npm install --save-dev @percy/cli
