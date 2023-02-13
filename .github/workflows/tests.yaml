@@ -24,11 +24,6 @@ jobs:
           sh install.sh
       - name: Run Tests
         run: |
-          nohup sh startup.sh > output.log &
-          cd client
-          mkdir screenshots
           export SCREEN_WIDTH=1920
           export SCREEN_HEIGHT=1080
-          npm run test src/tests/e2e/*.test.js
-          npm install --save-dev @percy/cli
-          ./node_modules/.bin/percy upload screenshots
+          sh test.sh

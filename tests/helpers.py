@@ -6,9 +6,13 @@ import os
 
 from retry import retry
 
+SCREEN_WIDTH = os.environ.get("SCREEN_WIDTH", 1920)
+SCREEN_HEIGHT = os.environ.get("SCREEN_HEIGHT", 1080)
+
 @retry(tries=5, delay=3)
 def get_driver():
     chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument(f"--window-size={SCREEN_WIDTH},{SCREEN_HEIGHT}")
     driver = webdriver.Remote(
         command_executor='http://localhost:4444/wd/hub',
         options=chrome_options
@@ -25,7 +29,8 @@ def write_screenshot(driver, filename):
         os.path.join(
             os.path.dirname(__file__),
             'screenshots',
-            filename + "_" + os.environ.get("ASPECT_RATIO", "none")) + ".png"
+            filename + "_" + SCREEN_WIDTH + "_" + SCREEN_HEIGHT + ".png"
+        )
     )
 
 def admin_login(driver):
