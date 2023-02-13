@@ -1,3 +1,5 @@
 pytest==7.2.1
 selenium==4.8.0
 retry==0.9.2
+pytest-md
+pytest-emoji
