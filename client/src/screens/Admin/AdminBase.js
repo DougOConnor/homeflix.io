@@ -6,19 +6,23 @@ import SubNavBar from '../../components/SubNavBar'
 const Pages = [
     {
         "text": "Theater Info",
-        "link": "/admin/theater-info"
+        "link": "/admin/theater-info",
+        "id": "theater-info-nav"
     },
     {
         "text": "Showings",
-        "link": "/admin/showings"
+        "link": "/admin/showings",
+        "id": "showings-nav"
     },
     {
         "text": "Reservations",
-        "link": "/admin/reservations"
+        "link": "/admin/reservations",
+        "id": "reservations-nav"
     },
     {
         "text": "Users",
-        "link": "/admin/users"
+        "link": "/admin/users",
+        "id": "users-nav"
     }
 ]
 
@@ -26,7 +30,7 @@ const Pages = [
 const AdminBase = (props) => {
 
     return (
-        <div>
+        <div id="admin-container">
             <SubNavBar pages={Pages}/>
             <Page>
             {props.children}

@@ -38,8 +38,12 @@ const AddMovieScreen = (props) => {
       }, [])
     
     const datetimeChangeHandler = (e) => {
-        console.log(e.format('MM-DD-YYYY HH:mm:SS'))
-        setDateTime(e)
+        if (e === null) {
+            return
+        } else {
+            console.log(e.format('MM-DD-YYYY HH:mm:SS'))
+            setDateTime(e)
+        }
     }
 
     const addShowing = () => {
@@ -87,12 +91,15 @@ const AddMovieScreen = (props) => {
                     </Typography>
                     <div style={{marginTop: 24, display: 'flex', flexDirection: 'column'}}>
                     <DateTimePicker
+                        id="showing-datetime-picker"
+                        ariaLabel='test'
+                        className='showing-datetime-picker'
                         label="Showing Datetime"
                         value={datetime}
                         onChange={datetimeChangeHandler}
                         renderInput={(params) => <TextField {...params} />}
                         />
-                        <Button style={{marginTop: 12}} variant="contained" onClick={() => addShowing()}>Add Showing</Button> 
+                        <Button id="submit-add-showing" style={{marginTop: 12}} variant="contained" onClick={() => addShowing()}>Add Showing</Button> 
                     </div> 
                 </div>
                 </Grid>

@@ -26,7 +26,7 @@ const AdminScreen = (props) => {
                 </CardContent>
                 <CardActions>
                     <div style={{width: "100%", display: 'flex', justifyContent: 'flex-end'}}>
-                        <Button variant="contained" onClick={() => navigate("/add-showing")}>Add Showing</Button>
+                        <Button id="add-showing-button" variant="contained" onClick={() => navigate("/add-showing")}>Add Showing</Button>
                     </div>
                 </CardActions>
             </Card>
