@@ -19,9 +19,6 @@ jobs:
       - name: Write Secrets
         run: |
           echo "${AUTH_TOKENS}" > ./api/auth.json
-      - name: Install
-        run: |
-          sh install.sh
       - name: Run Tests
         run: |
           export SCREEN_WIDTH=1920
