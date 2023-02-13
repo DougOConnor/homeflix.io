@@ -22,19 +22,21 @@ const ResponsiveAppBar = (props) => {
   const pages = [
     {
       text: "NOW PLAYING",
-      link: "/"
+      link: "/",
     }
   ];
   const settings = [
     {
       text: 'Admin',
       action: () => navigate("/admin/theater-info"),
-      admin: true
+      admin: true,
+      id: 'admin-menu-nav'
     },
     {
       text: 'Logout',
       action: () => {deleteUserData(); props.setUser(undefined)},
-      admin: false
+      admin: false,
+      id: 'logout-menu-nav'
     }
   ];
 
@@ -141,7 +143,7 @@ const ResponsiveAppBar = (props) => {
               user.username ? 
               <div>
               <Box sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
-              <div onClick={handleOpenUserMenu} style={{ cursor: 'pointer' }}>
+              <div onClick={handleOpenUserMenu} style={{ cursor: 'pointer' }} id="profile">
                 <p style={{fontSize: 14}}>{user.username}</p>
               </div>
               </Box>
@@ -168,7 +170,7 @@ const ResponsiveAppBar = (props) => {
               {settings.map((setting) => {
                 if (setting.admin == false || (setting.admin == true && user.is_admin == 1)) {
                   return (
-                    <MenuItem key={setting.text} onClick={() => {handleCloseUserMenu(); setting.action()} }>
+                    <MenuItem id={setting.id} key={setting.text} onClick={() => {handleCloseUserMenu(); setting.action()} }>
                       <Typography textAlign="center">{setting.text}</Typography>
                     </MenuItem>
                   )
@@ -180,7 +182,7 @@ const ResponsiveAppBar = (props) => {
             </Menu>
             </div>
             :
-            <div style={{cursor: 'pointer'}} onClick={() => {handleCloseUserMenu(); navigate("/login")}}>Login</div>
+            <div id="login-nav" style={{cursor: 'pointer'}} onClick={() => {handleCloseUserMenu(); navigate("/login")}} >Login</div>
             }
               
           </Box>

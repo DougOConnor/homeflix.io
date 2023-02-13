@@ -19,16 +19,27 @@ jobs:
       - name: Write Secrets
         run: |
           echo "${AUTH_TOKENS}" > ./api/auth.json
-      - name: Install
+      - name: Prepare Tests
         run: |
-          sh install.sh
-      - name: Run Tests
-        run: |
-          nohup sh startup.sh > output.log &
-          cd client
-          mkdir screenshots
           export SCREEN_WIDTH=1920
           export SCREEN_HEIGHT=1080
-          npm run test src/tests/e2e/*.test.js
+          docker compose up --detach --build
+          cd tests
+          pip install -r requirements.txt
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          verbose: true
+          job-summary: true
+          custom-arguments: '-q'
+          report-title: 'Test Report'
+      - name: Upload to Percy
+        run: |
+          mkdir client/screenshots
+          mv tests/screenshots/* client/screenshots
+          cd client
           npm install --save-dev @percy/cli
           ./node_modules/.bin/percy upload screenshots
+      - name: Clean Up
+        run: |
+          docker compose down

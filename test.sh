@@ -1,15 +1,8 @@
-rm data/*
-nohup sh startup.sh > output.log &
+docker compose up --detach --build
 
-cd client
-nohup npm start > output2.log &
+cd tests
 
-sleep 5
+pip install -r requirements.txt
+python -m pytest
 
-export SCREEN_WIDTH=1920
-export SCREEN_HEIGHT=1080
-npm run test src/tests/e2e/*.test.js 
-
-sleep 2
-
-killall -9 node
+docker compose down

@@ -1,3 +1,5 @@
+cd app
+
 mkdir -p data
 node utils/database-init.js
 

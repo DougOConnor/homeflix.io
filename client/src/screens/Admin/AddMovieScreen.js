@@ -48,6 +48,7 @@ const AddMovieScreen = (props) => {
             Add a showing
             </Typography>
             <TextField
+                id="search-movie"
                 style={{
                     width: '100%',
                     marginTop: 8
@@ -82,7 +83,7 @@ const AddMovieScreen = (props) => {
                             <p>{results.release_date}</p>
                             </CardContent>
                             <CardActions>
-                                <Button size="small" variant="contained" onClick={() => navigate("/add-showing/" + results.id.toString())}>Add Showing</Button>
+                                <Button id={"add-showing-" + results.id.toString()} size="small" variant="contained" onClick={() => navigate("/add-showing/" + results.id.toString())}>Add Showing</Button>
                             </CardActions>
                         </div>
                     </Card>

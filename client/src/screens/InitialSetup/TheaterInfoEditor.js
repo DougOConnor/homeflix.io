@@ -47,7 +47,7 @@ const TheaterInfoEditor = (props) => {
             flexDirection: 'column',
         }}>
             <TextField
-                id="theater-name"
+                id="theater-name-input"
                 label="Theater Name"
                 variant="standard"
                 onChange={(name) => theaterNameChangeHandler(name)}

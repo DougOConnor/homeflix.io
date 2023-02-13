@@ -181,6 +181,7 @@ function LoginScreen(props) {
                             mode == 'login' && token == undefined ? 
                             <div>
                                 <TextField
+                                    id="username"
                                     key="username"
                                     style={inputElement}
                                     label="Username"
@@ -191,6 +192,7 @@ function LoginScreen(props) {
                                     {username}
                                 </TextField>
                                 <TextField
+                                    id="password"
                                     key="password"
                                     style={inputElement}
                                     label="Password"
@@ -212,7 +214,7 @@ function LoginScreen(props) {
                                     Account not found or password incorrect
                                 </Alert>
 
-                              <div style={{...button, ...inputElement}} onClick={() => login()}>
+                              <div id="login-button" style={{...button, ...inputElement}} onClick={() => login()}>
                                     Login
                                 </div>
                                 <div style={{...inputElement, cursor: 'pointer', fontSize: 14}} onClick={() => setMode('create')}>
