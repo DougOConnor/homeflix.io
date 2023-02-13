@@ -13,6 +13,8 @@ SCREEN_HEIGHT = str(os.environ.get("SCREEN_HEIGHT", 1080))
 def get_driver():
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument(f"--window-size={SCREEN_WIDTH},{SCREEN_HEIGHT}")
+    chrome_options.add_argument('--disable-dev-shm-usage') 
+    chrome_options.add_argument('--no-sandbox') 
     driver = webdriver.Remote(
         command_executor='http://localhost:4444/wd/hub',
         options=chrome_options
