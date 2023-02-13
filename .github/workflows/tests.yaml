@@ -19,7 +19,7 @@ jobs:
       - name: Write Secrets
         run: |
           echo "${AUTH_TOKENS}" > ./api/auth.json
-      - name: Run Tests
+      - name: Prepare Tests
         run: |
           export SCREEN_WIDTH=1920
           export SCREEN_HEIGHT=1080
@@ -30,7 +30,7 @@ jobs:
         uses: pavelzw/pytest-action@v2
         with:
           verbose: true
-          emoji: true
+          emoji: false
           job-summary: true
           custom-arguments: '-q'
           click-to-expand: true

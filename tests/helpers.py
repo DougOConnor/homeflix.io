@@ -6,8 +6,8 @@ import os
 
 from retry import retry
 
-SCREEN_WIDTH = os.environ.get("SCREEN_WIDTH", 1920)
-SCREEN_HEIGHT = os.environ.get("SCREEN_HEIGHT", 1080)
+SCREEN_WIDTH = str(os.environ.get("SCREEN_WIDTH", 1920))
+SCREEN_HEIGHT = str(os.environ.get("SCREEN_HEIGHT", 1080))
 
 @retry(tries=5, delay=3)
 def get_driver():
