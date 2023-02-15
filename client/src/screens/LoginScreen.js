@@ -29,6 +29,7 @@ function LoginScreen(props) {
     const [newUsername, setNewUsername] = useState()
     const [newPassword, setNewPassword] = useState()
     const [confirmNewPassword, setConfirmNewPassword] = useState()
+    const [newEmail, setNewEmail] = useState()
 
     const [showNewUsernameError, setShowNewUsernameError] = useState(false)
     const [showNewPasswordError, setShowNewPasswordError] = useState(false)
@@ -57,7 +58,8 @@ function LoginScreen(props) {
             "/api/v1/user",
             {
                 username: newUsername,
-                password: newPassword
+                password: newPassword,
+                email: newEmail
             }
         ).then((response)=> {
             let data = response.data
@@ -119,6 +121,10 @@ function LoginScreen(props) {
     const handleNewPasswordChange = (value) => {
         setNewPassword(value)
         setShowNewPasswordError(true)
+    }
+
+    const handleNewEmailChange = (value) => {
+        setNewEmail(value)
     }
 
     return (
@@ -237,6 +243,18 @@ function LoginScreen(props) {
                                     onChange={(e) => handleNewUsernameChange(e.target.value)}
                                     error={showNewUsernameError ? !isUsernameValid(newUsername): false}
                                     helperText={showNewUsernameError ? getUsernameError(newUsername): null}
+                                    >
+                                    {newUsername}
+                                </TextField>
+                                <TextField
+                                    key="new-email"
+                                    style={inputElement}
+                                    label="Email"
+                                    //onChange={(e) => setNewUsername(e.target.value)}
+                                    sx={{color: 'black'}}
+                                    variant="standard"
+                                    fullWidth
+                                    onChange={(e) => handleNewEmailChange(e.target.value)}
                                     >
                                     {newUsername}
                                 </TextField>

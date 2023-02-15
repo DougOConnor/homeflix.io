@@ -84,6 +84,7 @@ router.post('/', async (req, res, next) => {
         user = await models.users.create({
             username: body.username,
             password: body.password,
+            email: body.email,
             is_admin: isAdmin
         })
         let token = generateBearerToken()

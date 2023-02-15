@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const nocache = require('nocache');
 const port = process.env.PORT || 5000;
 
+
 const showingsRoutes = require('./api/showings');
 const userRoutes = require('./api/user');
 const authRoutes = require('./api/auth');
@@ -27,6 +28,12 @@ app.use('/api/v1/settings', settings);
 
 // Serve any static files
 app.use("", express.static(path.join(__dirname, "client/build")));
+
+
+app.get("/api/v1/email", (req, res) => {
+  testSendEmail();
+  res.send("email sent");
+})
 
 app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));

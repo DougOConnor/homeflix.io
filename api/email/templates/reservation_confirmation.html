@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <style>
+      html {
+          margin: 0;
+          padding: 0;
+          background-color: black;
+          color: lightgray
+      }
+
+      h1, h2, h3, h4, h5, h6, p {
+          font-family: 'Avenir', sans-serif;
+          font-weight: 300;
+          color: white;
+      }
+
+      .section {
+          padding: 20px;
+          margin: 20px;
+          background-color: rgb(21, 21, 21);
+      }
+
+      .poster {
+          width: 140px;
+      }
+    </style>
+  </head>
+<div class="section">
+<h1>{{theater_name}}</h1>
+<h2>Reservation Confirmation</h2>
+<p>Thank you for your reservation. Your reservation details are below.</p>
+<div style="display:flex;flex-direction:row;">
+  <img class="poster" src="{{poster_path}}" width="120">
+  <div class="details" style="margin-left:12px">
+    <h3>{{movie_title}}</h3>
+    <p style="margin:0px;">{{showing_date}}</p>
+    <p style="margin:0px;">{{showing_time}}</p>
+    <p>Seats: {{seats}}</p>
+</div>
+</div>
+</html>
