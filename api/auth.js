@@ -5,6 +5,7 @@ const createError = require('http-errors')
 const generateBearerToken = require("../utils/generateBearerToken")
 
 const { models } = require("../models")
+const { Op } = require("sequelize");
 
 // Login
 router.post('/login', async (req, res, next) => { 
@@ -12,8 +13,11 @@ router.post('/login', async (req, res, next) => {
         let body = req.body
         let user = await models.users.findOne({
             "where": {
-              "username": body.username,
-              "password": body.password
+              "password": body.password,
+              [Op.or]: [
+                { username: body.username },
+                { email: body.username}
+              ]
             }
         })
         if (user != null) {

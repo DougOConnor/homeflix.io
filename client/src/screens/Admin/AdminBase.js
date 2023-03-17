@@ -6,8 +6,7 @@ import SubNavBar from '../../components/SubNavBar'
 const Pages = [
     {
         "text": "Theater Info",
-        "link": "/admin/theater-info",
-        "id": "theater-info-nav"
+        "link": "/admin/theater-info"
     },
     {
         "text": "Showings",
@@ -16,13 +15,17 @@ const Pages = [
     },
     {
         "text": "Reservations",
-        "link": "/admin/reservations",
-        "id": "reservations-nav"
+        "link": "/admin/reservations"
     },
     {
         "text": "Users",
         "link": "/admin/users",
         "id": "users-nav"
+    },
+    {
+        "text": "Notifications",
+        "link": "/admin/notifications",
+        "id": "notifications-nav"
     }
 ]
 

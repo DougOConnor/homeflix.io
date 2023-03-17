@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const { models } = require('../models');
-
 const getUserIDfromToken = require("../utils/getUserIDfromToken");
 const sequelize = require('../models');
+
+const sendReservationConfirmation = require('./email/email').sendReservationConfirmation
 
 router.post('/', async (req, res, next) => { 
     try {
@@ -32,7 +33,10 @@ router.post('/', async (req, res, next) => {
                 for (const reservation of reservations) await sequelize.query(insert, { replacements: reservation });
             };
             insertReservations(reservations);
+            
+            sendReservationConfirmation(showing, user_id)
             res.send( {"status": "success"})
+            
         }
     } catch (err) {
         next(err)
