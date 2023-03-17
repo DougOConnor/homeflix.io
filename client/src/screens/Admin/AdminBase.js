@@ -10,7 +10,8 @@ const Pages = [
     },
     {
         "text": "Showings",
-        "link": "/admin/showings"
+        "link": "/admin/showings",
+        "id": "showings-nav"
     },
     {
         "text": "Reservations",
