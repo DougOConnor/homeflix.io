@@ -2,6 +2,7 @@ import { useGoogleLogin } from 'react-google-login';
 import { Grid, TextField, Snackbar, Alert } from '@mui/material';
 import Google from '../assets/google.png'
 import React, {useEffect, useState} from 'react';
+import validator from 'validator'
 
 import {readUserData, writeUserData} from '../utils/storage'
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -18,12 +19,12 @@ import axios from 'axios'
 const inputElement = {
     marginBottom: 24
 }
-const button = {padding: "6px 24px", border: "solid black 1px", cursor: 'pointer'}
+const button = {padding: "6px 24px", border: "solid black 1px"}
 
 function LoginScreen(props) {
     const [backdropPath, setbackdropPath] = useState("")
-    const [username, setUsername] = useState()
-    const [password, setPassword] = useState()
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
     
 
     const [newUsername, setNewUsername] = useState()
@@ -33,8 +34,12 @@ function LoginScreen(props) {
 
     const [showNewUsernameError, setShowNewUsernameError] = useState(false)
     const [showNewPasswordError, setShowNewPasswordError] = useState(false)
+    const [showNewEmailError, setShowNewEmailError] = useState(false)
 
     const [accountNotFoundError, setAccountNotFoundError] = useState(false)
+    const [resetPasswordSent, setResetPasswordSent] = useState(false)
+
+    const [emailEnabled, setEmailEnabled] = useState("")
 
     const [mode, setMode] = useState('login')
     const navigate = useNavigate()
@@ -50,6 +55,12 @@ function LoginScreen(props) {
         let results = response.data.results.slice(0,10)
         const random = Math.floor(Math.random() * results.length)
         setbackdropPath(response.data.results[random].backdrop_path)
+      })
+
+      axios.get(
+        '/api/v1/settings/email'
+      ).then(response => {
+        setEmailEnabled(response.data.smtp_enabled)
       })
     }, [])
 
@@ -88,6 +99,17 @@ function LoginScreen(props) {
         })
       }
 
+      const startResetPassword = () => {
+        axios.post(
+            "/api/v1/user/reset-password",
+            {
+                username: username,
+            }
+        ).then((response)=> {
+            setResetPasswordSent(true)
+        })
+    }
+
       const resetPassword = () => {
         axios.post(
             "/api/v1/auth/reset-password",
@@ -124,8 +146,19 @@ function LoginScreen(props) {
     }
 
     const handleNewEmailChange = (value) => {
-        setNewEmail(value)
+      setNewEmail(value)
+      if (!validator.isEmail(value)) {
+        setShowNewEmailError(true)
+      } else {
+        setShowNewEmailError(false)
+      }
     }
+
+
+    let validPasswordCheck = isPasswordValid(newPassword, confirmNewPassword)
+    let usernameExists = username.length > 0
+    let createAccountFormValid = validPasswordCheck && isUsernameValid(newUsername) && validator.isEmail(newEmail)
+    let resetPasswordFormValid = validPasswordCheck
 
     return (
         <Grid container justifyContent={"center"} style={{width: "100%", height: "100%", padding: 20, backgroundImage:  'url(https://www.themoviedb.org/t/p/w1280/' + backdropPath + ')',backgroundPosition: 'center',
@@ -136,7 +169,7 @@ function LoginScreen(props) {
             <Grid item textAlign={"center"}  style={{minHeight: "60%", display: 'flex', justifyContent: 'center'}}>
             <div style={{
                 backgroundColor: 'white',
-                maxWidth: 350,
+                width: 350,
                 //display: 'flex', 
                 flexDirection: "column", 
                 justifyContent: 'center', 
@@ -147,8 +180,8 @@ function LoginScreen(props) {
                 paddingTop: 54
                 }}>
                 <h1 style={{marginTop: 0, display: 'block'}}>{props.info.theaterName}</h1>
-                <div style={{display: 'flex', justifyContent: 'center', marginBottom: 30}}>
-                    <div>
+                <div style={{display: 'flex', justifyContent: 'center', marginBottom: 30, width: '100%'}}>
+                    <div style={{width: "100%"}}>
                         {
                             token !== undefined && token !== null ?
                             <div>
@@ -177,7 +210,13 @@ function LoginScreen(props) {
                                     >
                                     {confirmNewPassword}
                                 </TextField>
-                              <div style={{...button, ...inputElement}} onClick={() => resetPassword()}>
+                              <div style={{
+                                ...button,
+                                ...inputElement,
+                                cursor: resetPasswordFormValid ? 'pointer' : 'not-allowed',
+                                backgroundColor: resetPasswordFormValid ? 'white' : 'lightgray',
+                                color: resetPasswordFormValid ? 'black' : 'gray'
+                                }} onClick={resetPasswordFormValid ? () => resetPassword() : null}>
                                     Reset Password
                                 </div>
                             </div>
@@ -190,7 +229,7 @@ function LoginScreen(props) {
                                     id="username"
                                     key="username"
                                     style={inputElement}
-                                    label="Username"
+                                    label="Username or Email"
                                     onChange={(e) => setUsername(e.target.value)}
                                     sx={{color: 'black'}} variant="standard"
                                     fullWidth
@@ -223,14 +262,20 @@ function LoginScreen(props) {
                               <div id="login-button" style={{...button, ...inputElement}} onClick={() => login()}>
                                     Login
                                 </div>
+                                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                                 <div style={{...inputElement, cursor: 'pointer', fontSize: 14}} onClick={() => setMode('create')}>
                                     Create Account
+                                </div>
+                                <div style={{...inputElement, fontSize: 14, marginLeft: 24, marginRight: 24}}></div>
+                                <div style={{...inputElement, cursor: 'pointer', fontSize: 14}} onClick={() => setMode('reset')}>
+                                    Reset Password
+                                </div>
                                 </div>
                             </div>
                             : null                
                             }
                             {
-                                mode !== 'login' && token == undefined ?
+                                mode === 'create' && token == undefined ?
                             <div>
                                 <TextField
                                     key="new-username"
@@ -255,8 +300,10 @@ function LoginScreen(props) {
                                     variant="standard"
                                     fullWidth
                                     onChange={(e) => handleNewEmailChange(e.target.value)}
+                                    error={showNewEmailError ? "please enter a valid email address": false}
+                                    helperText={showNewEmailError ? "please enter a valid email address": null}
                                     >
-                                    {newUsername}
+                                    {newEmail}
                                 </TextField>
                                 <TextField
                                     key="new-password"
@@ -283,7 +330,16 @@ function LoginScreen(props) {
                                     >
                                     {confirmNewPassword}
                                 </TextField>
-                              <div style={{...button, ...inputElement}} onClick={() => signUp()}>
+                              <div style={{
+                                ...button,
+                                ...inputElement,
+                                cursor: createAccountFormValid ? 'pointer' : 'not-allowed',
+                                backgroundColor: createAccountFormValid ? 'white' : 'lightgray',
+                                color: createAccountFormValid ? 'black' : 'gray'
+                                }} 
+                                onClick={createAccountFormValid ? () => signUp() : null}
+                                
+                                >
                                     Create Account
                                 </div>
                                 <div style={{...inputElement, cursor: 'pointer', fontSize: 14}} onClick={() => setMode('login')}>
@@ -292,7 +348,47 @@ function LoginScreen(props) {
                             </div>
                             : null
                         }
-                        
+                        {
+                            mode === 'reset' && token == undefined ?
+                            <div style={{width: "100%"}}>
+                                <TextField
+                                    id="username"
+                                    key="username"
+                                    style={inputElement}
+                                    label="Username or Email"
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    sx={{color: 'black'}} variant="standard"
+                                    fullWidth
+                                    >
+                                    {username}
+                                </TextField>
+                                <div style={{
+                                    ...button,
+                                    ...inputElement,
+                                    cursor: usernameExists ? 'pointer' : 'not-allowed',
+                                    backgroundColor: usernameExists ? 'white' : 'lightgray',
+                                    color: usernameExists ? 'black' : 'gray'
+                                    }} 
+                                    onClick={usernameExists ? () => startResetPassword() : null}
+                                
+                                >
+                                    Reset Password
+                                </div>
+                                <div style={{...inputElement, cursor: 'pointer', fontSize: 14}} onClick={() => setMode('login')}>
+                                    Back to Login
+                                </div>
+                                <Alert
+                                    visible={resetPasswordSent}
+                                    style={{marginBottom: 20, display: resetPasswordSent ? 'flex' : 'none'}}
+                                    severity="info"
+                                    variant='outlined'
+                                    onClose={()=> {setResetPasswordSent(false)}}
+                                    >
+                                    An email has been sent to with a link to reset your password
+                                </Alert>
+                            </div>
+                            : null
+                        }
                     </div>
                 </div>
                 

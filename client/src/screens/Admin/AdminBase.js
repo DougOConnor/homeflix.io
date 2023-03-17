@@ -32,7 +32,7 @@ const Pages = [
 const AdminBase = (props) => {
 
     return (
-        <div>
+        <div id="#admin-container">
             <SubNavBar pages={Pages}/>
             <Page>
             {props.children}

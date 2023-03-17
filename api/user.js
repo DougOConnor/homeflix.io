@@ -6,11 +6,16 @@ const getUserIDfromToken = require("../utils/getUserIDfromToken")
 
 const { models } = require('../models');
 const sequelize = require('../models');
+const { Op } = require("sequelize");
 
 const {
     formatDate,
     formatTime,
 } = require('../utils/helpers')
+
+const {
+    sendPasswordReset
+} = require('./email/email')
 
 // Get All Users
 router.get('/all', async (req, res, next) => {
@@ -26,14 +31,27 @@ router.get('/all', async (req, res, next) => {
 // Insert Reset Password Token
 router.post('/reset-password', async (req, res, next) => { 
     try {
+        console.log(req.get("host"))
         let body = req.body
         let user_id = body.user_id
+        let username = body.username
+        let user = null
+        if (username) {
+            user = await models.users.findOne({ where : { [Op.or] : [
+                    { username: username },
+                    { email: username}
+                ]}})
+            user_id = user.user_id
+        } else {
+            user = await models.users.findByPk(user_id)
+        }   
         let token = generateBearerToken()
-        let user = await models.users.findByPk(user_id)
         user.reset_token = token
         user.save()
+        sendPasswordReset(user.email, req.get("host"), token)
         res.send({})
     } catch (err) {
+        console.log(err)
         next(err)
     }
 });

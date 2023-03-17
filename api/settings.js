@@ -121,7 +121,7 @@ router.post('/layout', async (req, res, next) => {
   }
 });
 
-router.post('/email', async (req, res, next) => { 
+router.post('/email', async (req, res, next) => {
   try {
     // Check if user is admin
     const user_id = await getUserIDfromToken(req.headers.authorization)
@@ -141,12 +141,34 @@ router.post('/email', async (req, res, next) => {
 
 router.get('/email', async (req, res, next) => { 
   try {
-    let data = {}
-    if (fs.existsSync(emailConfigPath)) {
-      data = fs.readFileSync(emailConfigPath)
+    
+    let is_admin = false
+    console.log(req.headers.authorization)
+    if (req.headers.authorization === undefined) {
+      is_admin = false
+    } else {
+      const user_id = await getUserIDfromToken(req.headers.authorization)
+      const user = await models.users.findByPk(user_id)
+      is_admin = user.is_admin
     }
-    res.send(data)
+    
+    let data = {}
+    let response = {}
+    if (fs.existsSync(emailConfigPath)) {
+      console.log('file exists')
+      data = JSON.parse(fs.readFileSync(emailConfigPath))
+      if (is_admin) {
+        response = data
+      } else {
+        response = {
+          smtp_enabled: data.smtp_enabled
+        }
+      }
+    }
+    console.log(response)
+    res.send(response)
   } catch (err) {
+    console.log(err)
     next(err)
   }
 });

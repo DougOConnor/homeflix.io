@@ -29,6 +29,21 @@ const renderTemplate = (template, replacements) => {
 
 }
 
+const sendPasswordReset = async (email, host, token) => {
+    let link = "http://" + host + "/reset-password?token=" + token
+    if (checkEmailEnabled()) {
+        html = await renderTemplate('reset_email.html', {
+            link: link
+        })
+        await sendEmail(
+            email,
+            'Password Reset Request',
+            html,
+            "Reset your password here " + link,
+            null)
+    }
+}
+
 const sendReservationConfirmation = async (showing_id, user_id) => {
     if (checkEmailEnabled()) {
         let info = JSON.parse(fs.readFileSync(infoConfigPath, 'utf8'))
@@ -100,3 +115,4 @@ const sendEmail = async (to, subject, html, text, config) => {
 module.exports.sendEmail = sendEmail
 module.exports.renderTemplate = renderTemplate
 module.exports.sendReservationConfirmation = sendReservationConfirmation
+module.exports.sendPasswordReset = sendPasswordReset
