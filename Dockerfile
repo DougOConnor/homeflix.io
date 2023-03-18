@@ -1,19 +1,19 @@
 FROM node:16
 
-ADD api /app/api
-ADD client /app/client
-ADD config /app/config
-ADD models /app/models
-ADD utils /app/utils
-ADD install.sh /app/install.sh
-ADD package.json /app/package.json
-ADD package-lock.json /app/package-lock.json
-ADD server.js /app/server.js
-ADD startup.sh /app/startup.sh
-ADD migrations /app/migrations
-ADD seeders /app/seeders
+ADD api /api
+ADD client /client
+ADD config /config
+ADD models /models
+ADD utils /utils
+ADD install.sh /install.sh
+ADD package.json /package.json
+ADD package-lock.json /package-lock.json
+ADD server.js /server.js
+ADD startup.sh /startup.sh
+ADD migrations /migrations
+ADD seeders /seeders
 
 
-RUN sh /app/install.sh
+RUN sh /install.sh
 
-CMD ["sh", "/app/startup.sh"]
+CMD ["sh", "/startup.sh"]
