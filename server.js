@@ -13,6 +13,25 @@ const reservation = require('./api/reservations');
 const tmdb = require('./api/tmdb');
 const settings = require('./api/settings');
 
+const winston = require('winston')
+const consoleTransport = new winston.transports.Console()
+const myWinstonOptions = {
+    transports: [consoleTransport]
+}
+const logger = new winston.createLogger(myWinstonOptions)
+
+function logRequest(req, res, next) {
+  logger.info(req.url)
+  next()
+}
+app.use(logRequest)
+
+function logError(err, req, res, next) {
+  logger.error(err)
+  next()
+}
+app.use(logError)
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(nocache());
@@ -39,15 +58,15 @@ app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
 
-  app.use((error, req, res, next) => {
+app.use((error, req, res, next) => {
     // Sets HTTP status code
     if (error.status) {
+      console.log(error)
       res.status(error.status)
     } else {
       res.status(500)
     }
     
-  
     // Sends response
     res.json({
       status: error.status,

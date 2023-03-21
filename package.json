@@ -31,6 +31,7 @@
     "sequelize-cli": "^6.5.2",
     "sqlite": "^4.1.1",
     "sqlite3": "^5.0.8",
-    "swagger-ui-express": "^4.6.0"
+    "swagger-ui-express": "^4.6.0",
+    "winston": "^3.8.2"
   }
 }
