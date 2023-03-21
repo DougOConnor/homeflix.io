@@ -143,7 +143,7 @@ router.get('/email', async (req, res, next) => {
   try {
     
     let is_admin = false
-    console.log(req.headers.authorization)
+    console.log(req.headers)
     if (req.headers.authorization === undefined) {
       is_admin = false
     } else {
