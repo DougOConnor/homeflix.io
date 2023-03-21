@@ -61,6 +61,7 @@ app.get("/*", (req, res) => {
   app.use((error, req, res, next) => {
     // Sets HTTP status code
     if (error.status) {
+      console.log(error)
       res.status(error.status)
     } else {
       res.status(500)
