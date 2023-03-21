@@ -4,4 +4,4 @@ source env/bin/activate
 pip install -r tests/requirements.txt
 python -m pytest
 
-#docker compose down
+docker compose down
