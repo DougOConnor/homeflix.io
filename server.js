@@ -58,7 +58,7 @@ app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
 
-  app.use((error, req, res, next) => {
+app.use((error, req, res, next) => {
     // Sets HTTP status code
     if (error.status) {
       console.log(error)
@@ -67,7 +67,6 @@ app.get("/*", (req, res) => {
       res.status(500)
     }
     
-  
     // Sends response
     res.json({
       status: error.status,
