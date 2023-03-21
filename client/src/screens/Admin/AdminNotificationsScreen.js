@@ -103,7 +103,7 @@ const AdminNotifications = (props) => {
 
     useEffect(() => {
         axios.get(
-            '/api/v1/settings/email').then((response) => {
+            '/api/v1/settings/email', {headers: {"Authorization": "Bearer " + userData.token}}).then((response) => {
                 setSmtpEnabled(response.data.smtp_enabled)
                 setSmtpServer(response.data.smtp_server)
                 setSmtpUsername(response.data.smtp_username)
