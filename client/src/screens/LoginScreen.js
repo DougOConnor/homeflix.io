@@ -266,10 +266,14 @@ function LoginScreen(props) {
                                 <div style={{...inputElement, cursor: 'pointer', fontSize: 14}} onClick={() => setMode('create')}>
                                     Create Account
                                 </div>
-                                <div style={{...inputElement, fontSize: 14, marginLeft: 24, marginRight: 24}}></div>
-                                <div style={{...inputElement, cursor: 'pointer', fontSize: 14}} onClick={() => setMode('reset')}>
-                                    Reset Password
-                                </div>
+                                {
+                                    emailEnabled ?
+                                    <div style={{...inputElement, cursor: 'pointer', fontSize: 14, marginLeft: 48}} onClick={() => setMode('reset')}>Reset Password
+                                    </div>
+                                    : null
+                                }
+                                
+                                    
                                 </div>
                             </div>
                             : null                
