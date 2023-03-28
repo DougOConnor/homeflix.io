@@ -20,6 +20,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "axios-retry": "^3.3.1",
+    "bcrypt": "^5.1.0",
     "better-sqlite3": "^7.6.0",
     "express": "^4.17.3",
     "handlebars": "^4.7.7",

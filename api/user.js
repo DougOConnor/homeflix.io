@@ -3,6 +3,7 @@ const router = express.Router();
 
 const generateBearerToken = require("../utils/generateBearerToken")
 const getUserIDfromToken = require("../utils/getUserIDfromToken")
+const { generateEncryptedPassword, validateEncryptedPassword } = require('./utils/encrypt')
 
 const { models } = require('../models');
 const sequelize = require('../models');
@@ -98,10 +99,11 @@ router.post('/', async (req, res, next) => {
         let isAdmin = 0
         if (body.is_admin) {
             isAdmin = 1
-        } 
+        }
+        let encyptedPassword = await generateEncryptedPassword(body.password)
         user = await models.users.create({
             username: body.username,
-            password: body.password,
+            password: encyptedPassword,
             email: body.email,
             is_admin: isAdmin
         })
@@ -118,6 +120,7 @@ router.post('/', async (req, res, next) => {
             "is_admin": isAdmin
         })
     } catch (err) {
+        console.log(err)
         next(err)
     }
 });
@@ -137,6 +140,8 @@ router.get('/', async (req, res, next) => {
         next(err)
     }
 });
+
+
 
 
 
