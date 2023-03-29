@@ -14,6 +14,7 @@ def test_admin_login():
 
     admin_login(driver)
 
+    wait_for_element(driver, "#profile")
     profile = driver.find_element("id", "profile")
     profile.click()
 
