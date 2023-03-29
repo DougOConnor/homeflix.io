@@ -22,7 +22,7 @@ router.post('/login', async (req, res, next) => {
             }
         })
         if (user != null) {
-          if (validateEncryptedPassword(body.password, user.password)) {
+          if (await validateEncryptedPassword(body.password, user.password)) {
             let token = generateBearerToken()
             let payload = {
               token: token,
