@@ -8,8 +8,8 @@ generateEncryptedPassword = async (password) => {
 }
 
 validateEncryptedPassword = async (password, hash) => {
-  console.log(password)
-  return await bcrypt.compare(password, hash)
+  let check = await bcrypt.compare(password, hash)
+  return check
 }
 
 
