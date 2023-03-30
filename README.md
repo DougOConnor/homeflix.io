@@ -1,4 +1,4 @@
-# homeflix.io (UNDER DEVELOPMENT)
+# homeflix.io
 [![Release homeflix.io](https://github.com/DougOConnor/homeflix.io/actions/workflows/publish.yaml/badge.svg)](https://github.com/DougOConnor/homeflix.io/actions/workflows/publish.yaml)
 [![Github Release](https://img.shields.io/github/v/tag/dougoconnor/homeflix.io?label=Github%20Release)](https://github.com/DougOConnor/homeflix.io)
 [![Docker Release](https://img.shields.io/docker/v/douglasoconnor/homeflix.io?label=Docker%20Release)](https://hub.docker.com/repository/docker/douglasoconnor/homeflix.io)
@@ -26,5 +26,5 @@ docker run \
   --name=your_theater \
   -p 5000:5000 \
   -v /Path/to/your/data:/data \
-  douglasoconnor/homeflix.io:beta
+  douglasoconnor/homeflix.io:latest
 ```
