@@ -8,8 +8,6 @@ import { useLocation } from 'react-router-dom';
 const CheckoutConfirmation = (props) => {
     const {state} = useLocation();
 
-    console.log(state)
-
     return (
       <Page>
           <div style={{padding: 24}}> 
