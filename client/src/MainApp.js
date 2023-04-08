@@ -39,7 +39,7 @@ contrastText: '#fff',
 const theme = createTheme({
 typography: {
   fontFamily: [
-    'Avenir',
+    'Poppins',
   ].join(','),
 },
 palette: {
@@ -66,7 +66,7 @@ components: {
 const lightTheme  = createTheme({
 typography: {
   fontFamily: [
-    'Avenir',
+    'Poppins',
   ].join(','),
 },
 palette: {
@@ -77,7 +77,6 @@ palette: {
 function MainApp(props) {
   const [user, setUser] = useState({})
   const [info, setInfo] = useState({})
-  const [appInfo, setAppInfo] = useState({})
   const navigate = useNavigate()
 
   const refreshApppInfo = () => {
@@ -85,13 +84,12 @@ function MainApp(props) {
       '/api/v1/settings/app-info'
     ).then(response => {
       let data = response.data
-      setAppInfo(data)
       // handle redirects based on app info
-      if (data.hasAdmin == false) {
+      if (data.hasAdmin === false) {
         navigate("/setup/admin")
-      } else if (data.hasInfo == false) {
+      } else if (data.hasInfo === false) {
         navigate("/setup/info")
-      } else if (data.hasLayout == false) {
+      } else if (data.hasLayout === false) {
         navigate("/setup/layout")
       }
     })
@@ -130,7 +128,7 @@ function MainApp(props) {
       </ThemeProvider>
       <ThemeProvider theme={theme}>
       {
-        ["/login", "/reset-password"].indexOf(window.location.pathname) == -1 && <Navbar user={user} setUser={setUser} info={info}/>
+        ["/login", "/reset-password"].indexOf(window.location.pathname) === -1 && <Navbar user={user} setUser={setUser} info={info}/>
       }
       
       <Routes>
