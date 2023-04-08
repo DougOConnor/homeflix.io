@@ -45,7 +45,7 @@ const ResponsiveAppBar = (props) => {
                 key={page.link}
                 onClick={() => {navigate(page.link); handleCloseNavMenu()} }
                 href={page.link}
-                style={{fontFamily: 'Avenir', paddingLeft: 24, fontSize: 14, cursor: 'pointer', textDecoration: page.link === window.location.pathname ? 'underline' : 'none'}}
+                style={{fontFamily: 'Poppins', paddingLeft: 24, fontSize: 14, cursor: 'pointer', textDecoration: page.link === window.location.pathname ? 'underline' : 'none'}}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page.text}

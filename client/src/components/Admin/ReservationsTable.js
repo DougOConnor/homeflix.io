@@ -15,7 +15,6 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TextField from '@mui/material/TextField'
 
@@ -38,7 +37,6 @@ function EditMenu(props) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const [editDialogOpen, setEditOpenDialog] = React.useState(false);
-  const handleEditDialogOpen = () => setEditOpenDialog(true);
   const handleEditDialogClose = () => {setEditOpenDialog(false);handleCloseDropdownMenu()}
 
   const [deleteDialogOpen, setDeleteOpenDialog] = React.useState(false);

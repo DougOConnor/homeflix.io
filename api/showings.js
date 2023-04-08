@@ -49,6 +49,7 @@ router.get('/', async (req, res, next) => {
         data[0].forEach(item => {
           item.display_date = formatDate(item.showing_datetime)
           item.display_time = formatTime(item.showing_datetime)
+          item.movie_json = JSON.parse(item.movie_json)
         })
         res.send( data[0] )
     } catch (err) {
@@ -77,14 +78,18 @@ router.post('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => { 
   try {
     let body = req.body
+    console.log(body)
+    console.log(JSON.stringify(body.movie_json))
     let showing = await models.showings.create({
       title: body.title,
       poster_path: body.poster_path,
       tmdb_id: body.tmdb_id,
-      showing_datetime: body.showing_datetime
+      showing_datetime: body.showing_datetime,
+      movie_json: JSON.stringify(body.movie_json)
     })
     res.send({"status": "success"})
   } catch (err) {
+    console.log(err)
     next(err)
   }
 });

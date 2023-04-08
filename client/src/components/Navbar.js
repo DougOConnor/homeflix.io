@@ -69,7 +69,7 @@ const ResponsiveAppBar = (props) => {
             variant="h6"
             noWrap
             component="div"
-            style={{fontFamily: 'Avenir'}}
+            style={{fontFamily: 'Poppins'}}
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
             <div onClick={() => navigate("/")} style={{cursor: 'pointer'}}>
@@ -109,7 +109,7 @@ const ResponsiveAppBar = (props) => {
             >
               {pages.map((page) => (
                 <MenuItem key={page.link} onClick={() => {navigate(page.link); handleCloseNavMenu() }}>
-                  <Typography textAlign="center" style={{fontFamily: 'Avenir'}}>{page.text}</Typography>
+                  <Typography textAlign="center" style={{fontFamily: 'Poppins'}}>{page.text}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -120,7 +120,7 @@ const ResponsiveAppBar = (props) => {
             noWrap
             component="div"
             onClick={() => navigate("/")}
-            style={{fontFamily: 'Avenir', cursor: 'pointer'}}
+            style={{fontFamily: 'Poppins', cursor: 'pointer'}}
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
             {props.info.theaterName}
@@ -130,7 +130,7 @@ const ResponsiveAppBar = (props) => {
               <div
                 key={page.link}
                 onClick={() => {navigate(page.link); handleCloseNavMenu()} }
-                style={{fontFamily: 'Avenir', paddingLeft: 24, fontSize: 14, cursor: 'pointer'}}
+                style={{fontFamily: 'Poppins', paddingLeft: 24, fontSize: 14, cursor: 'pointer'}}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page.text}

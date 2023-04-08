@@ -21,6 +21,10 @@ module.exports = (sequelize) => {
     },
     showing_datetime: {
       type: DataTypes.STRING,
+    },
+    movie_json: {
+      type: DataTypes.STRING,
+      allowNull: true,
     }
   },
   {
