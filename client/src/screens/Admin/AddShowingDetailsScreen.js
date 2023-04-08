@@ -51,7 +51,8 @@ const AddMovieScreen = (props) => {
             "tmdb_id": tmdbID,
             "title": movie.title,
             "poster_path": movie.poster_path,
-            "showing_datetime": datetime.format('YYYY-MM-DD HH:mm:SS')
+            "showing_datetime": datetime.format('YYYY-MM-DD HH:mm:SS'),
+            "movie_json": movie
         }
         axios.post(
             "/api/v1/showings",

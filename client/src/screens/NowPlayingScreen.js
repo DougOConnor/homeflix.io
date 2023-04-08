@@ -120,7 +120,7 @@ const NowPlayingScreen = (props) => {
               nowPlaying.map(movie => {
                   return(
                       <div style={{ marginTop: 12}}>
-                      <NowPlayingCard data={movie} link={true}/>
+                      <NowPlayingCard data={movie} link={true} movie_json={movie.movie_json}/>
                       <div style={{padding: 24}}>
                           <div style={{borderBottom: "1px solid #2c2c2c"}}>
 
