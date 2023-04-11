@@ -73,7 +73,7 @@ const NowPlayingScreen = (props) => {
 
     return (
         <Grid container spacing={2} justifyContent={'center'} style={{marginTop: 24}}>
-          <Grid item xs={12} lg={11} xl={8}>
+          <Grid item xs={12} lg={11} xl={10}>
           <Grid container spacing={2}>
           <Grid item xs={12} lg={8} style={{padding: "0px 32px"}}>
             <div style={{borderBottom: '1px solid darkgrey'}}>
