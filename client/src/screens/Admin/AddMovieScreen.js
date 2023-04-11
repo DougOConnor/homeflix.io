@@ -6,7 +6,7 @@ import Page from '../../components/Page'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import { CardMedia } from '@mui/material';
+import { CardMedia, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField'
@@ -16,8 +16,9 @@ import MoviePoster from '../../components/MoviePoster';
 
 const resultCardStyle = {
     marginTop: 12,
-    flexDirection: 'row',
-    display: 'flex'
+    flexDirection: 'column',
+    display: 'flex',
+    height: '100%'
 }
 
 const AddMovieScreen = (props) => {
@@ -67,29 +68,35 @@ const AddMovieScreen = (props) => {
             <img style={{height: 12, marginTop: 12}} src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_long_1-8ba2ac31f354005783fab473602c34c3f4fd207150182061e425d366e4f34596.svg" />
         </CardContent>
         </Card>
+        <Grid container spacing={2}>
         {
             results.results.map(results => {
                 return(
+                    <Grid item xs={6} sm={4} md={3} lg={2}>
                     <Card style={resultCardStyle} key={results.id}>
                     <MoviePoster
-                        style={{width: "40%"}}
+                        style={{width: "100%"}}
                         path={results.poster_path}
                     />
-                        <div>
+                        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: "100%"}}>
                         <CardContent >
-                            <Typography variant='h5' color="text.primary" >
+
+                            
+                            <Typography variant='body1' color="text.primary" >
                             {results.original_title}
                             </Typography>
                             <p>{results.release_date}</p>
                             </CardContent>
                             <CardActions>
-                                <Button id={"add-showing-" + results.id.toString()} size="small" variant="contained" onClick={() => navigate("/add-showing/" + results.id.toString())}>Add Showing</Button>
+                                <Button id={"add-showing-" + results.id.toString()} size="small" variant="contained" onClick={() => navigate("/add-showing/" + results.id.toString())} style={{width:"100%"}}>Add Showing</Button>
                             </CardActions>
                         </div>
                     </Card>
+                    </Grid>
                 )
             })
         }
+        </Grid>
         </div>
       </Page>
     )
