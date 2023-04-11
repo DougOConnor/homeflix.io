@@ -21,6 +21,21 @@ router.get('/movie/:id', async (req, res, next) => {
     }
 });
 
+router.get('/movie/:id/images', async (req, res, next) => {  
+    try {
+        const id = req.params.id;
+        axios.get(
+            'https://api.themoviedb.org/3/movie/' + id + '/images?api_key=' + auth_tokens.tmdb_token
+          ).then(response => {
+              res.send(response.data)
+          }).catch(err => {
+              next(err)
+          })
+    } catch (err) {
+        next(err)
+    }
+});
+
 router.get('/search', async (req, res, next) => { 
     try {
         const search = req.query.q

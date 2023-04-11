@@ -31,7 +31,7 @@ import AdminNotificationsScreen from "./screens/Admin/AdminNotificationsScreen";
 
 const primary = {
 //light: '#e15166;',
-main: '#2b6da8',
+main: '#0b69a2',
 //dark: '#b9152d',
 contrastText: '#fff',
 }
@@ -56,7 +56,11 @@ components: {
   MuiButton: {
     styleOverrides: {
       root: {
-        borderRadius: 200
+        borderRadius: 0,
+        paddingTop: 12,
+        paddingBottom: 12,
+        paddingLeft: 24,
+        paddingRight: 24
       }
     }
   }
