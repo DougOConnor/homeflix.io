@@ -211,14 +211,16 @@ export default function DataGridDemo() {
   }
 
   const columns = [
-    { field: 'showing_id', headerName: 'ID' },
+    { field: 'showing_id', headerName: 'ID'},
     {
         field: 'title',
         headerName: 'Title',
+        flex: 1
     },
     {
         field: 'showing_datetime',
         headerName: 'Showing Datetime',
+        flex: 1
 
     },
     {
