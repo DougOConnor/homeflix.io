@@ -103,7 +103,9 @@ const AddMovieScreen = (props) => {
             movieposters.posters && movieposters.posters.map((poster) => {
                 return (
                     <Grid item xs={6} sm={3} lg={3}>
-                      <div onClick={()=> {updatePoster(poster.file_path); handlePosterDialogClose() } }>
+                      <div
+                        style={{cursor: 'pointer'}} 
+                        onClick={()=> {updatePoster(poster.file_path); handlePosterDialogClose() } }>
                         <MoviePoster path={poster.file_path} style={{width: "100%"}} />
                       </div>
                     </Grid>
