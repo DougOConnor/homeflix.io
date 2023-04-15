@@ -79,13 +79,10 @@ const AddMovieScreen = (props) => {
                         path={results.poster_path}
                     />
                         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: "100%"}}>
-                        <CardContent >
-
-                            
-                            <Typography variant='body1' color="text.primary" >
-                            {results.original_title}
+                        <CardContent style={{paddingBottom: 0}}>
+                            <Typography variant='body1' color="text.primary" style={{textAlign: 'center'}}>
+                            {results.original_title}{results.release_date ? " (" + results.release_date.slice(0,4) + ")" : null}
                             </Typography>
-                            <p>{results.release_date}</p>
                             </CardContent>
                             <CardActions>
                                 <Button id={"add-showing-" + results.id.toString()} size="small" variant="contained" onClick={() => navigate("/add-showing/" + results.id.toString())} style={{width:"100%"}}>Add Showing</Button>
