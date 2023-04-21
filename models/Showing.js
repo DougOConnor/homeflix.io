@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
     movie_json: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     }
   },
