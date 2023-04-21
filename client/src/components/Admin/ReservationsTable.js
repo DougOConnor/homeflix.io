@@ -204,23 +204,36 @@ export default function DataGridDemo() {
 
   const columns = [
     { field: 'showing_id', headerName: 'Showing ID' },
-    { field: 'username', headerName: 'Username', flex: 2  },
+    { 
+      field: 'username',
+      headerName: 'Username',
+      flex: 2,
+      renderCell: (rowData) => {
+        return rowData.row.user.username
+      }
+    },
     { field: 'seat_id', headerName: 'Seat', flex: 1  },
     {
         field: 'title',
-        headerName: 'Title', flex: 2 
+        headerName: 'Title', flex: 2,
+        renderCell: (rowData) => {
+            return rowData.row.showing.title
+        }
     },
     {
         field: 'showing_datetime',
         headerName: 'Showing Datetime', 
-        flex: 2
+        flex: 2,
+        renderCell: (rowData) => {
+          return rowData.row.showing.showing_datetime
+        }
 
     },
     {
       field: 'poster',
       headerName: 'Poster',
       renderCell: (rowData) => {
-        return <MoviePoster path={rowData.row.poster_path} style={{height: 100}}/>
+        return <MoviePoster path={rowData.row.showing.poster_path} style={{height: 100}}/>
       }
     },
     {

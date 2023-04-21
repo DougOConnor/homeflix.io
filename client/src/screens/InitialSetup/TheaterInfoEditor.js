@@ -17,7 +17,8 @@ const TheaterInfoEditor = (props) => {
         axios.post(
             "/api/v1/settings/info",
             {
-                theaterName: theaterName
+                theater_name: theaterName,
+                first_time_settings_complete: "true"
             },
             {
                 headers: {

@@ -3,6 +3,7 @@ import axios from 'axios'
 import Page from '../../components/Page'
 import { Button } from '@mui/material';
 import { TextField } from '@mui/material';
+import validator from 'validator'
 
 import { useNavigate } from 'react-router-dom';
 
@@ -24,6 +25,8 @@ const AdminCreate = (props) => {
     const [username, setUsername] = useState("")
     const [showUsernameError, setShowUsernameError] = useState(false)
     const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("")
+    const [showEmailError, setShowEmailError] = useState(false)
     const [showPasswordError, setShowPasswordError] = useState(false)
     const [confirmPassword, setConfirmPassword] = useState()
     const [showConfirmPasswordError, setShowConfirmPasswordError] = useState(false)
@@ -35,6 +38,7 @@ const AdminCreate = (props) => {
             {
                 username: username,
                 password: password,
+                email: email,
                 is_admin: true
             }
         ).then((response) => {
@@ -49,6 +53,15 @@ const AdminCreate = (props) => {
         setUsername(value)
         if (value.length > 3) {
             setShowUsernameError(true)
+        }
+    }
+
+    const handleEmailChange = (value) => {
+        setEmail(value)
+        if (!validator.isEmail(value)) {
+          setShowEmailError(true)
+        } else {
+          setShowEmailError(false)
         }
     }
 
@@ -80,11 +93,22 @@ const AdminCreate = (props) => {
                 label="Username"
                 variant="standard"
                 onChange={(e) => handleUsernameChange(e.target.value)}
-                error={showUsernameError ? !isUsernameValid(username): false}
-                helperText={showUsernameError ? getUsernameError(username): null}
+                error={showEmailError}
+                helperText={showEmailError ? "Please enter a valid email": null}
                 
                 >
                 {username}
+            </TextField>
+            <TextField
+                id='email'
+                style={formElement}
+                label="Email"
+                variant="standard"
+                onChange={(e) => handleEmailChange(e.target.value)}
+                error={showPasswordError ? !isPasswordValid(password, confirmPassword): false}
+                helperText={showPasswordError ? getPasswordError(password, confirmPassword): null}
+                >
+                {password}
             </TextField>
             <TextField
                 id='password'
@@ -117,7 +141,7 @@ const AdminCreate = (props) => {
                 id="create-admin-account-button"
                 variant='contained'
                 onClick={() => saveInfo()}
-                disabled={password !== confirmPassword || password.length < 1} 
+                disabled={password !== confirmPassword || password.length < 1 || showEmailError} 
                 >
                 Save
             </Button>

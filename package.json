@@ -28,6 +28,7 @@
     "login-with-plex": "^1.1.1",
     "nocache": "^3.0.3",
     "nodemailer": "^6.7.8",
+    "pg": "^8.10.0",
     "sequelize": "^6.25.6",
     "sequelize-cli": "^6.5.2",
     "sqlite": "^4.1.1",

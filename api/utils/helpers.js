@@ -1,3 +1,6 @@
+const {models} = require('../../models')
+const { Op } = require("sequelize");
+
 const days = [
   "Sunday",
   "Monday",
@@ -24,7 +27,49 @@ const formatTime = (mydate) => {
   return time
 }
 
+const zipSettings = (settings) => {
+  let zip = {}
+  settings.map((setting) => {
+    zip[setting.key] = setting.value
+  })
+  return zip
+}
+
+const readSettings = async (settings) => {
+  const data = await models.settings.findAll({where: { key: { [Op.in]: settings}}})
+  let converted_data = {}
+  data.map((setting) => {
+    let value = setting.value
+    if (setting.type === 'json') {
+      value = JSON.parse(value)
+    } else if (setting.type === 'boolean') {
+      value = value === 'true'
+    } else if (setting.type === 'integer') {
+      value = parseInt(value)
+    } else {
+      value = value
+    }
+    converted_data[setting.key] = value
+  })
+  return converted_data
+}
+
+const writeSettings = async (settings) => {
+  console.log(settings)
+  let converted_settings = []
+  Object.keys(settings).map((setting) => {
+    let value = settings[setting]
+    converted_settings.push({"key": setting, "value": value})
+  })
+  converted_settings.map((setting) => {
+    models.settings.update({"value": setting.value}, {where: {key: setting.key}})
+  })
+}
+
 module.exports = {
   formatDate,
-  formatTime
+  formatTime,
+  zipSettings,
+  writeSettings,
+  readSettings
 }

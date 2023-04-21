@@ -7,7 +7,7 @@ const { generateEncryptedPassword, validateEncryptedPassword } = require('./util
 
 const { models } = require('../models');
 const sequelize = require('../models');
-const { Op } = require("sequelize");
+const  Op  = require("sequelize").Op;
 
 const {
     formatDate,
@@ -60,33 +60,28 @@ router.post('/reset-password', async (req, res, next) => {
 // Get Current User's Reservations
 router.get('/reservations', async (req, res, next) => {
     try {
-        
         let user_id = await getUserIDfromToken(req.headers.authorization)
-        //let user = await models.users.findByPk(user_id)
-        //let reservations = await user.getReservations({ include: models.showings })
-        let data = await sequelize.query(
-            `
-            SELECT
-                reservations.user_id,
-                reservations.seat_id,
-                showings.showing_id,
-                showings.title,
-                showings.poster_path,
-                showings.showing_datetime
-            FROM reservations
-            LEFT JOIN showings ON reservations.showing_id = showings.showing_id
-            WHERE user_id = :user_id
-            AND showing_datetime > datetime('now','-1 day','localtime')
-            `,
-            {
-                replacements: { user_id: user_id },
+        let data = await sequelize.models.showings.findAll({
+            attributes: ['showing_id', 'showing_datetime', 'title', 'poster_path', 'tmdb_id'],
+            where: {
+                showing_datetime: {
+                    [Op.lt]: new Date() + 1
+                },
+            },
+            include: {
+                model: sequelize.models.reservations,
+                attributes: ['seat_id'],
+                where: {
+                    user_id: user_id,
+                }
             }
-        )
-        data[0].forEach(item => {
+        })
+        data = JSON.parse(JSON.stringify(data))
+        data.forEach(item => {
           item.display_date = formatDate(item.showing_datetime)
           item.display_time = formatTime(item.showing_datetime)
         })
-        res.send(data[0])
+        res.send(data)
     } catch (err) {
         next(err)
     }
@@ -140,9 +135,6 @@ router.get('/', async (req, res, next) => {
         next(err)
     }
 });
-
-
-
 
 
 module.exports = router;

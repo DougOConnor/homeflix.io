@@ -4,6 +4,8 @@ env
 tests/screenshots/*.png
 *.pyc
 .vscode
+/config/root.crt
+env.sh
 
 # dependencies
 /node_modules

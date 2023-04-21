@@ -13,6 +13,9 @@ const reservation = require('./api/reservations');
 const tmdb = require('./api/tmdb');
 const settings = require('./api/settings');
 
+const sequelize = require('./models');
+
+
 const winston = require('winston')
 const consoleTransport = new winston.transports.Console()
 const myWinstonOptions = {
@@ -67,7 +70,6 @@ app.use((error, req, res, next) => {
     } else {
       res.status(500)
     }
-    
     // Sends response
     res.json({
       status: error.status,
@@ -75,4 +77,29 @@ app.use((error, req, res, next) => {
       stack: error.stack
     })
   })
-  
+
+async function createSetting(setting) {
+  let dbSetting = await sequelize.models.settings.findByPk(setting.key)
+  if (!dbSetting) {
+    dbSetting = await sequelize.models.settings.create(setting)
+  }
+}
+
+let initialSettings = [
+  {"key": "theater_name", "value": "homeflix.io", "type": "string"},
+  {"key": "theater_layout", "value": "{}", "type": "json"},
+  {"key": "first_time_settings_complete", "value": "false", "type": "boolean"},
+  {"key": "first_time_layout_complete", "value": "false", "type": "boolean"},
+  {"key": "first_time_admin_complete", "value": "false", "type": "boolean"},
+  {"key": "smtp_enabled", "value": "false", "type": "boolean"},
+  {"key": "smtp_server", "value": null, "type": "string"},
+  {"key": "smtp_username", "value": null, "type": "string"},
+  {"key": "smtp_password", "value": null, "type": "string"},
+  {"key": "smtp_port", "value": null, "type": "integer"},
+  {"key": "smtp_tls", "value": "false", "type": "boolean"},
+  {"key": "smtp_from_email", "value": null, "type": "string"},
+  {"key": "smtp_from_name", "value": null, "type": "string"},
+  {"key": "smtp_test_recipient", "value": null, "type": "string"},
+]
+
+initialSettings.map(setting => createSetting(setting))

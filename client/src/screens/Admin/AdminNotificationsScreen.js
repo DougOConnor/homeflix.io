@@ -51,10 +51,10 @@ const AdminNotifications = (props) => {
             "smtp_username": smtp_username,
             "smtp_password": smtp_password,
             "smtp_port": smtp_port,
-            "smtp_force_tls": smtp_force_tls,
+            "smtp_tls": smtp_force_tls,
             "smtp_from_email": smtp_from_email,
-            "smtp_from_display_name": smtp_from_display_name,
-            "smtp_test_recepient": smtp_test_recepient
+            "smtp_from_name": smtp_from_display_name,
+            "smtp_test_recipient": smtp_test_recepient
         }
     }
     
@@ -109,11 +109,11 @@ const AdminNotifications = (props) => {
                 setSmtpUsername(response.data.smtp_username)
                 setSmtpPassword(response.data.smtp_password)
                 setSmtpPort(response.data.smtp_port)
-                setSmtpForceTls(response.data.smtp_force_tls)
+                setSmtpForceTls(response.data.smtp_tls)
                 setSmtpFromEmail(response.data.smtp_from_email)
-                setSmtpFromDisplayName(response.data.smtp_from_display_name)
-                setSmtpTestRecipient(response.data.smtp_test_recepient)
-            })
+                setSmtpFromDisplayName(response.data.smtp_from_name)
+                setSmtpTestRecipient(response.data.smtp_test_recipient)
+            }) 
     }, [])
 
     return (

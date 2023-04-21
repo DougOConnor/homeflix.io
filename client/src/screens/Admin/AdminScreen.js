@@ -43,7 +43,7 @@ const AdminScreen = (props) => {
     }
 
     const theaterNameChangeHandler = (e) => {
-        setInfo({...info, theaterName: e.target.value})
+        setInfo({...info, theater_name : e.target.value})
     }
 
     return (
@@ -69,7 +69,7 @@ const AdminScreen = (props) => {
                             //label="Search"
                             variant="standard"
                             onChange={theaterNameChangeHandler}
-                            value={info.theaterName}
+                            value={info.theater_name}
                             />
                         </td>
                     </tr>
