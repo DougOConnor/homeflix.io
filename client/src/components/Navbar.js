@@ -73,7 +73,7 @@ const ResponsiveAppBar = (props) => {
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
             <div onClick={() => navigate("/")} style={{cursor: 'pointer'}}>
-            {props.info.theaterName}
+            {props.info.theater_name}
             </div>
             
           </Typography>
@@ -123,7 +123,7 @@ const ResponsiveAppBar = (props) => {
             style={{fontFamily: 'Poppins', cursor: 'pointer'}}
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            {props.info.theaterName}
+            {props.info.theater_name }
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (

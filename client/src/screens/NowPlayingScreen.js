@@ -10,6 +10,7 @@ import {
   formatDate,
   formatTime
 } from '../utils/helpers'
+import { timePickerValueManager } from '@mui/x-date-pickers/TimePicker/shared';
 
 const headerStyle = {
   marginTop: 8
@@ -46,22 +47,17 @@ const NowPlayingScreen = (props) => {
               "Authorization": "Bearer " + userData.token
             }
           }
-          ).then(data => {
-          data.data.map(reservation => {
-            if (myTickets[reservation.showing_id] === undefined) {
-              myTickets[reservation.showing_id] = {
-                title: reservation.title,
-                poster_path: reservation.poster_path,
-                showing_datetime: reservation.showing_datetime,
-                display_date: reservation.display_date,
-                display_time: reservation.display_time,
-                seats: []
-              }
-            }
-            myTickets[reservation.showing_id].seats.push(reservation.seat_id)
-          })
-          setMyReservations(myTickets)
-          console.log(myTickets)
+          ).then(response => {
+            console.log(response.data)
+            let myTickets = response.data
+            myTickets.forEach(ticket => {
+              let mySeats = []
+              ticket.reservations.map(reservation => {
+                mySeats.push(reservation.seat_id)
+              })
+              ticket.seats = mySeats
+            })
+            setMyReservations(response.data)
         })
       }
     }

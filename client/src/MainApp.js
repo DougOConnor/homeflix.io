@@ -7,13 +7,13 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 
 import {
-readUserData
+  readUserData
 } from './utils/storage'
 import TheaterLayoutEditor from './screens/InitialSetup/TheaterLayoutEditor';
 import TheaterInfoEditor from './screens/InitialSetup/TheaterInfoEditor'
 import {
-createTheme,
-ThemeProvider
+  createTheme,
+  ThemeProvider
 } from '@mui/material/styles';
 import AdminCreate from "./screens/InitialSetup/AdminCreate";
 import CheckoutScreen from './screens/CheckoutScreen'
@@ -106,7 +106,7 @@ function MainApp(props) {
       '/api/v1/settings/info'
     ).then(response => {
       setInfo(response.data)
-      document.title = response.data.theaterName
+      document.title = response.data.theater_name
     })
     if (userData) {
       axios.get(
