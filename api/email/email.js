@@ -4,21 +4,14 @@ const fs = require('fs')
 var handlebars = require('handlebars');
 
 const { models } = require('../../models');
-const sequelize = require('../../models');
-const axios = require('axios')
 
-const emailConfigPath = './data/email.json'
-const infoConfigPath = './data/info.json'
+const { readSettings } = require('../utils/helpers')
 
 const {formatDate, formatTime} = require('../../utils/helpers')
 
 const checkEmailEnabled = () => {
-    if (fs.existsSync(emailConfigPath)) {
-        let data = JSON.parse(fs.readFileSync(emailConfigPath, 'utf8'))
-        return data.smtp_enabled
-    } else {
-        return false
-    }
+    let data = readSettings(["smtp_enabled"])
+    return data.smtp_enabled
 }
 
 const renderTemplate = (template, replacements) => {
@@ -46,7 +39,7 @@ const sendPasswordReset = async (email, host, token) => {
 
 const sendReservationConfirmation = async (showing_id, user_id) => {
     if (checkEmailEnabled()) {
-        let info = JSON.parse(fs.readFileSync(infoConfigPath, 'utf8'))
+        let info = await readSettings(["theater_name"])
         let showingData = await models.showings.findByPk(showing_id)
         let userData = await models.users.findByPk(user_id)
         let seatData = await models.reservations.findAll({where: {showing_id: showing_id, user_id: user_id}})
@@ -63,7 +56,7 @@ const sendReservationConfirmation = async (showing_id, user_id) => {
             showing_time: showing_time,
             seats: seats.join(", "),
             poster_path: "https://image.tmdb.org/t/p/w500/" + showingData.poster_path,
-            theater_name: info.theaterName,
+            theater_name: info.theater_name,
         })
         await sendEmail(
             userData.email,
@@ -82,7 +75,7 @@ const sendEmail = async (to, subject, html, text, config) => {
     if (config !== null) {
         data = config
     } else {
-        data = JSON.parse(fs.readFileSync(emailConfigPath, 'utf8'))
+        data = await readSettings(["smtp_server", "smtp_port", "smtp_username", "smtp_password", "smtp_from_name", "smtp_from_email"])
     }
   
     // create reusable transporter object using the default SMTP transport
@@ -99,7 +92,7 @@ const sendEmail = async (to, subject, html, text, config) => {
   
     // send mail with defined transport object
     let info = await transporter.sendMail({
-        from: '"' + data.smtp_from_display_name + '" ' + data.smtp_from_email, // sender address
+        from: '"' + data.smtp_from_name + '" ' + data.smtp_from_email, // sender address
         to: to, // list of receivers
         subject: subject, // Subject line
         text: text, // plain text body

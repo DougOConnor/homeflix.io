@@ -6,6 +6,7 @@ const auth_tokens = require('./auth.json')
 
 const { models } = require('../models');
 const sequelize = require('../models');
+const Op = require('sequelize').Op;
 
 const {
   formatDate,
@@ -42,17 +43,21 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-        const data = await sequelize.query(
-          "SELECT * FROM showings WHERE showing_datetime > datetime('now','-1 day','localtime') ORDER BY showing_datetime"
-          )
-        
-        data[0].forEach(item => {
+        const data = await models.showings.findAll({
+          where: {
+            showing_datetime: {
+              [Op.lt]: new Date() + 1
+            }
+          }
+        })        
+        data.forEach(item => {
           item.display_date = formatDate(item.showing_datetime)
           item.display_time = formatTime(item.showing_datetime)
           item.movie_json = JSON.parse(item.movie_json)
         })
-        res.send( data[0] )
+        res.send( data )
     } catch (err) {
+      console.log(err)
       next(err)
     }
   })
@@ -97,20 +102,8 @@ router.post('/', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => { 
   try {
     const id = req.params.id;
-    await sequelize.query(
-      `DELETE FROM reservations 
-      WHERE showing_id = :showing_id`,
-      {
-        replacements: {showing_id: id}
-      }
-    )
-    await sequelize.query(
-      `DELETE FROM showings 
-      WHERE showing_id = :showing_id`,
-      {
-        replacements: {showing_id: id}
-      }
-    )
+    await sequelize.models.reservations.destroy({ where: { showing_id: id } })
+    await sequelize.models.showings.destroy({ where: { showing_id: id } })
     res.send({"status": "success"})
   } catch (err) {
     next(err)
