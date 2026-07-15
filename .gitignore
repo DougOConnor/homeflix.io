@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Frontend build output
+app/frontend/build/
+
+# Secrets & local config — never commit these
+.env
+app/.env
+app/api/auth.json
+
+# Local data (SQLite DB, uploaded images, sessions)
+app/data/
+app/sessions.db
+
+# OS / editor noise
+.DS_Store
+*.log
+nohup.out

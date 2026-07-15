@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  min-height: 100%;
+  background-color: #0b0b11;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+@layer utilities {
+  /* Big cinema-marquee display type */
+  .font-marquee {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.04em;
+  }
+
+  .text-glow-marquee {
+    text-shadow: 0 0 18px rgba(217, 38, 55, 0.5), 0 0 48px rgba(217, 38, 55, 0.2);
+  }
+
+  /* Subtle spotlight wash used behind hero sections */
+  .bg-spotlight {
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(217, 38, 55, 0.13), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 110%, rgba(139, 30, 45, 0.15), transparent 60%);
+  }
+
+  /* Ticket stub notches */
+  .ticket-notch {
+    -webkit-mask-image: radial-gradient(circle 12px at 0 50%, transparent 98%, black 100%),
+      radial-gradient(circle 12px at 100% 50%, transparent 98%, black 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: radial-gradient(circle 12px at 0 50%, transparent 98%, black 100%),
+      radial-gradient(circle 12px at 100% 50%, transparent 98%, black 100%);
+    mask-composite: intersect;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

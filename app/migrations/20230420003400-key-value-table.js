@@ -1,0 +1,23 @@
+'use strict';
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.createTable('settings', { 
+      key: {
+        type: Sequelize.STRING,
+        primaryKey: true,
+      },
+      type: {
+        type: Sequelize.STRING,
+      },
+      value: {
+        type: Sequelize.STRING,
+      },
+    });
+  },
+
+  async down (queryInterface, Sequelize) {
+    await queryInterface.dropTable('settings');
+  }
+};
